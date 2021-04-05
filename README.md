@@ -1,5 +1,5 @@
 
-GET: /auth/user
+GET: https://intense-stream-90411.herokuapp.com/auth/user
 > Authentication: Bearer *token*
       
 RESPONSE 200:
@@ -15,7 +15,7 @@ RESPONSE 200:
       }
 
 
-POST: /auth/register 
+POST:  https://intense-stream-90411.herokuapp.com/auth/register 
 >
       body: { 
             "email": "test@gmail.com",
@@ -34,7 +34,7 @@ RESPONSE 201:
                    }
       }
 
-POST: /auth/login
+POST: https://intense-stream-90411.herokuapp.com/auth/login
 > 
       body: {
             "email": "test@gmail.com",
@@ -54,7 +54,7 @@ RESPONSE 200:
       }
     
     
-POST: /auth/logout
+POST: https://intense-stream-90411.herokuapp.com/auth/logout
 >
       Authentication: Bearer *token*
       
