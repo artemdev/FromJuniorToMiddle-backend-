@@ -5,7 +5,7 @@ const Subscription = {
   PRO: 'pro',
   PREMIUM: 'premium',
 };
-const HttpCode = {
+const httpCode = {
   OK: 200,
   CREATED: 201,
   NO_CONTENT: 204,
@@ -23,7 +23,7 @@ const SECRET_KEY = process.env.JWT_SECRET;
 
 module.exports = {
   Subscription,
-  HttpCode,
+  httpCode,
   SALT_WORK_FACTOR,
   SECRET_KEY,
 };
