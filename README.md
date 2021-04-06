@@ -62,3 +62,34 @@ RESPONSE 204:
 >
       {
       }
+      
+GET: https://intense-stream-90411.herokuapp.com/tests/technicalQA
+
+RESPONSE 200: 
+>
+      {
+            "status": "success",
+            "code": 200,
+            "data": [{
+            "question": "How many testing principles are there?",
+            "questionId": 1,
+            "answers": ["5", "6", "7", "8", "9", "I don't know"],
+            "rightAnswer": "7"
+            }, {}, ...]
+            }
+      }
+      
+GET: https://intense-stream-90411.herokuapp.com/tests/testingTheory
+
+RESPONSE 200: 
+>
+      {
+            "status": "success",
+            "code": 200,
+            "data": [{
+            "question": "What does 'CI' stands for in QA?",
+            "questionId": 1,
+            "answers": ["Connection interface", "Nothing", "Continuous Integration", "Centiliter"],
+            "rightAnswer": "Continuous Integration"
+            }, {}, ...]
+      }
