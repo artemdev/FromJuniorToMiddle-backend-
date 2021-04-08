@@ -16,7 +16,11 @@ const reg = async (req, res) => {
         message: 'Email in use',
       });
     }
+
     const newUser = await Users.create(req.body);
+    const id = newUser.id;
+    const payload = { id };
+    const token = jwt.sign(payload, SECRET_KEY, { expiresIn: '2h' });
     return res.status(httpCode.CREATED).json({
       status: 'success',
       code: httpCode.CREATED,
@@ -24,6 +28,7 @@ const reg = async (req, res) => {
         email: newUser.email,
         name: newUser.name,
         avatar: newUser.avatar,
+        token,
       },
     });
   } catch (e) {
