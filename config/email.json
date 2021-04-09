@@ -1,0 +1,5 @@
+{
+  "dev": "http://localhost:3000",
+  "prod": "intense-stream-90411.herokuapp.com",
+  "stage": "http://localhost:3000"
+}
