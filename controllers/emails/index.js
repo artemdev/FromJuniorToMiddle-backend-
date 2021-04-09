@@ -6,33 +6,39 @@ const sendEmail = async (_, res) => {
     const email = 'artem.zimovets@gmail.com';
     const name = 'Artem';
     const emailService = new EmailService(process.env.NODE_ENV);
+    const questions = [
+      {
+        question:
+          'What is JS What is JS What is JS What is JS What is JS What is JS What is JS',
+        answer: 'What is JS What is JS What is JS What is JS ',
+        rightAnswer:
+          'Programming languageProgramming language Programming language Programming language',
+      },
+      {
+        question:
+          'What is JS What is JS What is JS What is JS What is JS What is JS What is JS',
+        answer: 'What is JS What is JS What is JS What is JS ',
+        rightAnswer:
+          'Programming languageProgramming language Programming language Programming language',
+      },
+      {
+        question:
+          'What is JS What is JS What is JS What is JS What is JS What is JS What is JS',
+        answer: 'What is JS What is JS What is JS What is JS ',
+        rightAnswer:
+          'Programming languageProgramming language Programming language Programming language',
+      },
+    ];
+    // const title = type ?? "Technical test" || "Theory test"
+    // type = "tech"
+    const type = 'theory';
     const body = {
-      score: 90,
-      questions: [
-        {
-          question:
-            'What is JS What is JS What is JS What is JS What is JS What is JS What is JS',
-          answer: 'What is JS What is JS What is JS What is JS ',
-          correctAnswer:
-            'Programming languageProgramming language Programming language Programming language',
-        },
-        {
-          item: 'What is JS',
-          answer: 'Movie',
-          correctAnswer: 'Programming language',
-        },
-        {
-          item: 'What is JS',
-          answer: 'Movie',
-          correctAnswer: 'Programming language',
-        },
-      ],
-
-      title: 'Technical test',
+      // score: 90,
+      questions,
       name,
     };
 
-    await emailService.sendEmail(email, body);
+    await emailService.sendEmail(email, body, type);
     return res.status(httpCode.OK).json({
       message: 'Email has been sent!',
     });

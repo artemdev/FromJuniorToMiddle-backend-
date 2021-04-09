@@ -44,7 +44,38 @@ class EmailService {
     return mailGenerator.generate(template);
   }
 
-  async sendEmail(email, body) {
+  //  const body = {
+  //     // score: 90,
+  //     questions:[
+  //   {
+  //     question:
+  //       'What is JS What is JS What is JS What is JS What is JS What is JS What is JS',
+  //     answer: 'What is JS What is JS What is JS What is JS ',
+  //     rightAnswer:
+  //       'Programming languageProgramming language Programming language Programming language',
+  //   },
+  //   {
+  //     question:
+  //       'What is JS What is JS What is JS What is JS What is JS What is JS What is JS',
+  //     answer: 'What is JS What is JS What is JS What is JS ',
+  //     rightAnswer:
+  //       'Programming languageProgramming language Programming language Programming language',
+  //   },
+  //   {
+  //     question:
+  //       'What is JS What is JS What is JS What is JS What is JS What is JS What is JS',
+  //     answer: 'What is JS What is JS What is JS What is JS ',
+  //     rightAnswer:
+  //       'Programming languageProgramming language Programming language Programming language',
+  //   },
+  // ];
+  //     name,
+  //   };
+  // const type = 'theory';
+  // const email = 'artem.zimovets@gmail.com';
+  async sendEmail(email, body, type) {
+    // TODO count score
+
     const emailBody = this.#createTemplate(body);
     this.#sender.setApiKey(process.env.SENDGRID_API_KEY);
     const msg = {
