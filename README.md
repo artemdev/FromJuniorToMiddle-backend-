@@ -264,3 +264,22 @@ RESPONSE 200:
             "code": 200,
             "message": "Results deleted"
       }
+
+POST: https://intense-stream-90411.herokuapp.com/emails
+
+
+RESPONSE 200:
+
+>
+
+      {
+            "message": "Email successfully sent!"
+      }
+GET: https://intense-stream-90411.herokuapp.com/emails
+
+
+RESPONSE 200:
+
+>
+
+    HTML PAGE
