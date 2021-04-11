@@ -8,7 +8,7 @@ const technicalQADb = path.join(__dirname, "../../db/technicalQA.json");
 
 const createResultQA = async (req, res, next) => {
   try {
-    const { id, email, name } = req.user;
+    const { _id, email, name } = req.user;
     const userAnswers = req.body;
     const questions = [];
     const testsList = await TestsList.listAllTests(technicalQADb);
@@ -51,7 +51,7 @@ const createResultQA = async (req, res, next) => {
       questions,
       total: questions.length,
       correctAnswers: correctAnswers.length,
-      owner: id,
+      owner: _id,
       email,
       name,
     });
