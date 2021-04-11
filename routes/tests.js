@@ -3,15 +3,13 @@ const router = express.Router();
 
 const guard = require("../helpers/guard");
 const {
-  saveResultQA,
-  getResultQA,
+  createResultQA,
   removeResultQA,
-} = require("../controllers/result/resultsQA");
+} = require("../controllers/testing/technicalQA");
 const {
-  saveResultTheory,
-  getResultTheory,
+  createResultTheory,
   removeResultTheory,
-} = require("../controllers/result/resultsTheory");
+} = require("../controllers/testing/testingTheory");
 
 const path = require("path");
 const Tests = require("../model/questions");
@@ -50,12 +48,10 @@ router.get("/testingTheory", async (_req, res, next) => {
   }
 });
 
-router.post("/technicalQA", guard, saveResultQA);
-router.get("/technicalQA/result", guard, getResultQA);
-router.delete("/technicalQA/result", guard, removeResultQA);
+router.post("/technicalQA", guard, createResultQA);
+router.delete("/technicalQA", guard, removeResultQA);
 
-router.post("/testingTheory", guard, saveResultTheory);
-router.get("/testingTheory/result", guard, getResultTheory);
-router.delete("/testingTheory/result", guard, removeResultTheory);
+router.post("/testingTheory", guard, createResultTheory);
+router.delete("/testingTheory", guard, removeResultTheory);
 
 module.exports = router;
