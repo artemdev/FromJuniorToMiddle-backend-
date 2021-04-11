@@ -8,7 +8,6 @@ const testingTheorySchema = new Schema(
       {
         questionId: {
           type: Number,
-          unique: true,
           required: [true, "QuestionId is required"],
         },
         question: {
