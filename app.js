@@ -27,6 +27,7 @@ app.use(helmet());
 app.get("env") !== "test" && app.use(logger(formatsLogger));
 app.use(cors());
 app.use(express.json());
+
 // app.use(limiter);
 
 app.use("/auth", authRouter);
@@ -34,6 +35,7 @@ app.use("/tests", testsRouter);
 // app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use('/emails', emailsRouter);
+
 
 app.use((req, res) => {
   res.status(httpCode.NOT_FOUND).json({ message: "Not found" });
