@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 // const uuid = require('uuid/v4');
 require('dotenv').config();
 
-const { secret } = process.env.JWT;
+// const { secret } = process.env.JWT;
 console.log('SECRET>>>>>>>>', process.env.JWT);
 const authHelper = require('../../helpers/authHelper');
 
