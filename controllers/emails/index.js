@@ -34,8 +34,10 @@ const sendEmail = async (_, res) => {
     const type = 'theory';
     const body = {
       // score: 90,
+      total: 10,
       questions,
       name,
+      correctAnswers: 9,
     };
 
     await emailService.sendEmail(email, body, type);
