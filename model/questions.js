@@ -1,6 +1,6 @@
-const fs = require("fs").promises;
+const fs = require('fs').promises;
 
-const listRandomTests = async (path) => {
+const listRandomTests = async path => {
   try {
     const data = await fs.readFile(path);
     const parsedData = JSON.parse(data)
@@ -8,13 +8,17 @@ const listRandomTests = async (path) => {
         return 0.5 - Math.random();
       })
       .slice(0, 12);
+    // const { question, questionId, answers } = parsedData;
+
+    console.log('DATA>>>>>', parsedData);
+
     return parsedData;
   } catch (error) {
     console.log(error);
   }
 };
 
-const listAllTests = async (path) => {
+const listAllTests = async path => {
   try {
     const data = await fs.readFile(path);
     const parsedData = JSON.parse(data);
