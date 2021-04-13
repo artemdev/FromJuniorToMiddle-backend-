@@ -36,9 +36,8 @@
     "nanoid": "3.1.22",
     "passport": "0.4.1",
     "passport-jwt": "4.0.0",
-    "query-string": "^7.0.0"
+    "query-string": "^7.0.0",
     "swagger-ui-express": "^4.1.6"
-
   },
   "devDependencies": {
     "@babel/core": "^7.13.10",
