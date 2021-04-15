@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 const { Schema, model, SchemaTypes } = mongoose;
 
 const technicalQASchema = new Schema(
@@ -8,19 +8,19 @@ const technicalQASchema = new Schema(
       {
         questionId: {
           type: Number,
-          required: [true, "QuestionId is required"],
+          required: [true, 'QuestionId is required'],
         },
         question: {
           type: String,
-          required: [true, "Question is required"],
+          required: [true, 'Question is required'],
         },
         answer: {
           type: String,
-          required: [true, "Answer is required"],
+          required: [true, 'Answer is required'],
         },
         rightAnswer: {
           type: Boolean,
-          required: [true, "RightAnswer is required"],
+          required: [true, 'RightAnswer is required'],
         },
       },
     ],
@@ -28,14 +28,14 @@ const technicalQASchema = new Schema(
     correctAnswers: { type: Number },
     owner: {
       type: SchemaTypes.ObjectId,
-      ref: "user",
+      ref: 'user',
     },
     email: { type: String },
     name: { type: String },
   },
-  { versionKey: false }
+  { versionKey: false },
 );
 
-const TechnicalQA = model("technicalQA", technicalQASchema);
+const TechnicalQA = model('technicalQA', technicalQASchema);
 
 module.exports = TechnicalQA;
