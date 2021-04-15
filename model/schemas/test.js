@@ -1,26 +1,30 @@
 const mongoose = require('mongoose');
 const { Schema, model, SchemaTypes } = mongoose;
 
-const technicalQASchema = new Schema(
+const testsSchema = new Schema(
   {
     type: { type: String },
     questions: [
       {
-        questionId: {
-          type: Number,
-          required: [true, 'QuestionId is required'],
-        },
+
         question: {
           type: String,
-          required: [true, 'Question is required'],
+          // required: [true, "Question is required"],
         },
         answer: {
           type: String,
-          required: [true, 'Answer is required'],
+          // required: [true, "Answer is required"],
+
         },
         rightAnswer: {
+          type: String,
+          // required: [true, "Answer is required"],
+        },
+        isCorrect: {
           type: Boolean,
-          required: [true, 'RightAnswer is required'],
+
+          // required: [true, "RightAnswer is required"],
+
         },
       },
     ],
@@ -36,6 +40,8 @@ const technicalQASchema = new Schema(
   { versionKey: false },
 );
 
-const TechnicalQA = model('technicalQA', technicalQASchema);
 
-module.exports = TechnicalQA;
+const Tests = model("tests", testsSchema);
+
+
+module.exports = Tests;
