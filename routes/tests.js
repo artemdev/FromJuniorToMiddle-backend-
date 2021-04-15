@@ -4,10 +4,12 @@ const router = express.Router();
 const guard = require("../helpers/guard");
 const {
   createResultQA,
+  getResultQA,
   removeResultQA,
 } = require("../controllers/testing/technicalQA");
 const {
   createResultTheory,
+  getResultTheory,
   removeResultTheory,
 } = require("../controllers/testing/testingTheory");
 
@@ -48,10 +50,12 @@ router.get("/testingTheory", async (_req, res, next) => {
   }
 });
 
-router.post("/technicalQA", guard, createResultQA);
-router.delete("/technicalQA", guard, removeResultQA);
+router.get("/technicalQA/result", guard, getResultQA);
+router.post("/technicalQA/result", guard, createResultQA);
+router.delete("/technicalQA/result", guard, removeResultQA);
 
-router.post("/testingTheory", guard, createResultTheory);
-router.delete("/testingTheory", guard, removeResultTheory);
+router.get("/testingTheory/result", guard, getResultTheory);
+router.post("/testingTheory/result", guard, createResultTheory);
+router.delete("/testingTheory/result", guard, removeResultTheory);
 
 module.exports = router;

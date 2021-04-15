@@ -1,8 +1,22 @@
-const Result = require("./schemas/testingTheory");
+const TestingTheory = require("./schemas/testingTheory");
 
 const addResult = async (body) => {
   try {
-    const result = await Result.create(body);
+    const result = await TestingTheory.create(body);
+    return result;
+  } catch (e) {
+    console.error(e.message);
+  }
+};
+
+const findResultByUserId = async (userId) => {
+  try {
+    const result = await TestingTheory.findOne({
+      owner: userId,
+    }).populate({
+      path: "owner",
+      select: "email -_id",
+    });
     return result;
   } catch (e) {
     console.error(e.message);
@@ -11,7 +25,7 @@ const addResult = async (body) => {
 
 const deleteResult = async (userId) => {
   try {
-    const result = await Result.remove({
+    const result = await TestingTheory.remove({
       owner: userId,
     });
     return result;
@@ -22,5 +36,6 @@ const deleteResult = async (userId) => {
 
 module.exports = {
   addResult,
+  findResultByUserId,
   deleteResult,
 };

@@ -85,6 +85,31 @@ const createResultQA = async (req, res, next) => {
   }
 };
 
+const getResultQA = async (req, res, next) => {
+  try {
+    const userId = req.user.id;
+    const resultQA = await Testing.findResultByUserId(userId);
+
+    if (resultQA) {
+      return res.status(httpCode.OK).json({
+        status: "success",
+        code: httpCode.OK,
+        data: {
+          resultQA,
+        },
+      });
+    } else {
+      return res.status(httpCode.NOT_FOUND).json({
+        status: "error",
+        code: httpCode.NOT_FOUND,
+        message: "Not Found",
+      });
+    }
+  } catch (e) {
+    next(e);
+  }
+};
+
 const removeResultQA = async (req, res, next) => {
   try {
     const userId = req.user.id;
@@ -110,5 +135,6 @@ const removeResultQA = async (req, res, next) => {
 
 module.exports = {
   createResultQA,
+  getResultQA,
   removeResultQA,
 };
