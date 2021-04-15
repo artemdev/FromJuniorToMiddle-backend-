@@ -9,10 +9,11 @@ const create = async body => {
   }
 };
 
-const findResultByUserId = async userId => {
+const findTechResultByUserId = async userId => {
   try {
     const result = await Test.findOne({
       owner: userId,
+      type: 'technicalQA',
     }).populate({
       path: 'owner',
       select: 'email -_id',
@@ -34,8 +35,24 @@ const deleteResult = async userId => {
   }
 };
 
+const findTheoryResultByUserId = async userId => {
+  try {
+    const result = await Test.findOne({
+      owner: userId,
+      type: 'testingTheory',
+    }).populate({
+      path: 'owner',
+      select: 'email -_id',
+    });
+    return result;
+  } catch (e) {
+    console.error(e.message);
+  }
+};
+
 module.exports = {
   create,
-  findResultByUserId,
+  findTheoryResultByUserId,
+  findTechResultByUserId,
   deleteResult,
 };
