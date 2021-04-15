@@ -84,6 +84,31 @@ const createResultTheory = async (req, res, next) => {
   }
 };
 
+const getResultTheory = async (req, res, next) => {
+  try {
+    const userId = req.user.id;
+    const resultTheory = await Testing.findResultByUserId(userId);
+
+    if (resultTheory) {
+      return res.status(httpCode.OK).json({
+        status: "success",
+        code: httpCode.OK,
+        data: {
+          resultTheory,
+        },
+      });
+    } else {
+      return res.status(httpCode.NOT_FOUND).json({
+        status: "error",
+        code: httpCode.NOT_FOUND,
+        message: "Not Found",
+      });
+    }
+  } catch (e) {
+    next(e);
+  }
+};
+
 const removeResultTheory = async (req, res, next) => {
   try {
     const userId = req.user.id;
@@ -109,5 +134,6 @@ const removeResultTheory = async (req, res, next) => {
 
 module.exports = {
   createResultTheory,
+  getResultTheory,
   removeResultTheory,
 };
