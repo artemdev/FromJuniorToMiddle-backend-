@@ -72,21 +72,14 @@ const createTechResult = async (req, res, next) => {
         name: technicalQA.name,
         correctAnswers: technicalQA.correctAnswers,
       };
-      const emailService = new EmailService(process.env.NODE_ENV);
-      await emailService.sendEmail(email, body, technicalQA.type);
+
+      // const emailService = new EmailService(process.env.NODE_ENV);
+      // await emailService.sendEmail(email, body, technicalQA.type);
 
       return res.status(httpCode.CREATED).json({
         status: 'success',
         code: httpCode.CREATED,
-        data: {
-          type: technicalQA.type,
-          questions: technicalQA.questions,
-          total: technicalQA.total,
-          correctAnswers: technicalQA.correctAnswers,
-          owner: technicalQA.owner,
-          mail: technicalQA.email,
-          name: technicalQA.name,
-        },
+        data: body,
       });
     } else {
       return res.status(httpCode.BAD_REQUEST).json({
@@ -208,8 +201,8 @@ const createTheoryResult = async (req, res, next) => {
       name: technicalQA.name,
       correctAnswers: technicalQA.correctAnswers,
     };
-    const emailService = new EmailService(process.env.NODE_ENV);
-    await emailService.sendEmail(email, body, technicalQA.type);
+    // const emailService = new EmailService(process.env.NODE_ENV);
+    // await emailService.sendEmail(email, body, technicalQA.type);
 
     return res.status(httpCode.CREATED).json({
       status: 'success',
