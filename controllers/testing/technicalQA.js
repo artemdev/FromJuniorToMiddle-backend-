@@ -1,10 +1,10 @@
-const path = require("path");
-const TestsList = require("../../model/questions");
-const { httpCode } = require("../../helpers/constants");
-const Testing = require("../../model/technicalQA");
-const EmailService = require("../../services/email");
+const path = require('path');
+const TestsList = require('../../model/questions');
+const { httpCode } = require('../../helpers/constants');
+const Testing = require('../../model/technicalQA');
+const EmailService = require('../../services/email');
 
-const technicalQADb = path.join(__dirname, "../../db/technicalQA.json");
+const technicalQADb = path.join(__dirname, '../../db/technicalQA.json');
 
 const createResultQA = async (req, res, next) => {
   try {
@@ -17,15 +17,15 @@ const createResultQA = async (req, res, next) => {
         questionId,
         question,
         rightAnswer,
-      })
+      }),
     );
 
-    userAnswers.forEach((answer) => {
+    userAnswers.forEach(answer => {
       if (
         dataToCheck.find(
-          (data) =>
+          data =>
             answer.questionId === data.questionId &&
-            answer.userAnswer === data.rightAnswer
+            answer.userAnswer === data.rightAnswer,
         )
       ) {
         questions.push({
@@ -44,10 +44,10 @@ const createResultQA = async (req, res, next) => {
       }
     });
 
-    const correctAnswers = questions.filter((el) => el.rightAnswer === true);
+    const correctAnswers = questions.filter(el => el.rightAnswer === true);
 
     const technicalQA = await Testing.addResult({
-      type: "technicalQA",
+      type: 'technicalQA',
       questions,
       total: questions.length,
       correctAnswers: correctAnswers.length,
@@ -57,11 +57,25 @@ const createResultQA = async (req, res, next) => {
     });
 
     if (technicalQA) {
+      const questions = [
+        ...technicalQA.questions.map(question => ({
+          answer: question.answer,
+          rightAnswer: String(question.rightAnswer),
+          question: question.question,
+        })),
+      ];
+
+      const body = {
+        total: technicalQA.total,
+        questions: questions,
+        name: technicalQA.name,
+        correctAnswers: technicalQA.correctAnswers,
+      };
       const emailService = new EmailService(process.env.NODE_ENV);
-      await emailService.sendEmail(email, technicalQA);
+      await emailService.sendEmail(email, body, technicalQA.type);
 
       return res.status(httpCode.CREATED).json({
-        status: "success",
+        status: 'success',
         code: httpCode.CREATED,
         data: {
           type: technicalQA.type,
@@ -75,9 +89,9 @@ const createResultQA = async (req, res, next) => {
       });
     } else {
       return res.status(httpCode.BAD_REQUEST).json({
-        status: "error",
+        status: 'error',
         code: httpCode.BAD_REQUEST,
-        message: "Not Found",
+        message: 'Not Found',
       });
     }
   } catch (e) {
@@ -92,7 +106,7 @@ const getResultQA = async (req, res, next) => {
 
     if (resultQA) {
       return res.status(httpCode.OK).json({
-        status: "success",
+        status: 'success',
         code: httpCode.OK,
         data: {
           resultQA,
@@ -100,9 +114,9 @@ const getResultQA = async (req, res, next) => {
       });
     } else {
       return res.status(httpCode.NOT_FOUND).json({
-        status: "error",
+        status: 'error',
         code: httpCode.NOT_FOUND,
-        message: "Not Found",
+        message: 'Not Found',
       });
     }
   } catch (e) {
@@ -117,15 +131,15 @@ const removeResultQA = async (req, res, next) => {
 
     if (technicalQA) {
       return res.status(httpCode.OK).json({
-        status: "success",
+        status: 'success',
         code: httpCode.OK,
-        message: "Results deleted",
+        message: 'Results deleted',
       });
     } else {
       return res.status(httpCode.NOT_FOUND).json({
-        status: "error",
+        status: 'error',
         code: httpCode.NOT_FOUND,
-        message: "Not Found",
+        message: 'Not Found',
       });
     }
   } catch (e) {
