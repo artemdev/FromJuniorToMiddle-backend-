@@ -232,7 +232,7 @@ const createTheoryResult = async (req, res, next) => {
 const getTheoryResult = async (req, res, next) => {
   try {
     const userId = req.user.id;
-    const resultTheory = await Testing.findResultByUserId(userId);
+    const resultTheory = await Tests.findTheoryResultByUserId(userId);
 
     if (resultTheory) {
       return res.status(httpCode.OK).json({
