@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const { Schema, model, SchemaTypes } = mongoose;
 
-const technicalQASchema = new Schema(
+const testsSchema = new Schema(
   {
     type: { type: String },
     questions: [
@@ -32,6 +32,6 @@ const technicalQASchema = new Schema(
   { versionKey: false },
 );
 
-const TechnicalQA = model('technicalQA', technicalQASchema);
+const Tests = model('tests', testsSchema);
 
-module.exports = TechnicalQA;
+module.exports = Tests;

@@ -153,7 +153,7 @@ const createTheoryResult = async (req, res, next) => {
     const { _id, email, name } = req.user;
     const userAnswers = req.body;
     const questions = [];
-    const testsList = await TestsList.listAllTests(theoryQuestionsDb);
+    const testsList = await parseTests(theoryQuestionsDb);
     const dataToCheck = testsList.map(
       ({ questionId, question, rightAnswer }) => ({
         questionId,
@@ -192,7 +192,7 @@ const createTheoryResult = async (req, res, next) => {
       rightAnswer: question.rightAnswer,
       question: question.question,
     }));
-    const technicalQA = await Testing.addResult({
+    const technicalQA = await Tests.create({
       type: 'testingTheory',
       questions: newQuestions,
       total: questions.length,
