@@ -54,5 +54,13 @@ router.delete('/technicalQA/result', guard, removeResult);
 router.get('/testingTheory/result', guard, getTheoryResult);
 router.post('/testingTheory/result', guard, createTheoryResult);
 router.delete('/testingTheory/result', guard, removeResult);
+// better names
+// router.post('/technical', guard, createTechResult);
+// router.get('/technical', guard, getTechResult);
+// router.delete('/technical', guard, removeResult);
+
+// router.post('/theory', guard, createTheoryResult);
+// router.get('/theory', guard, getTheoryResult);
+// router.delete('/theory', guard, removeResult);
 
 module.exports = router;

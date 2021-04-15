@@ -13,7 +13,7 @@ const findTechResultByUserId = async userId => {
   try {
     const result = await Test.findOne({
       owner: userId,
-      type: 'technicalQA',
+      type: 'technical',
     }).populate({
       path: 'owner',
       select: 'email -_id',
@@ -39,7 +39,7 @@ const findTheoryResultByUserId = async userId => {
   try {
     const result = await Test.findOne({
       owner: userId,
-      type: 'testingTheory',
+      type: 'theory',
     }).populate({
       path: 'owner',
       select: 'email -_id',
