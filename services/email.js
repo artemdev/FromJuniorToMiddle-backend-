@@ -39,17 +39,7 @@ class EmailService {
         table: body.questions.map(item => {
           return {
             title: item.question,
-            data: [{ answer: item.answer, correctAnswer: item.rightAnswer }],
-            columns: {
-              customWidth: {
-                answer: '50%',
-                correctAnswer: '50%',
-              },
-              customAlignment: {
-                answer: 'left',
-                correctAnswer: 'left',
-              },
-            },
+            data: [{ answer: item.answer, correctAnswer: item.answer }],
           };
         }),
       },
@@ -91,10 +81,13 @@ class EmailService {
   // const email = 'artem.zimovets@gmail.com';
 
   async sendEmail(email, body, type = 'theory') {
+    console.log(body);
+    console.log(email);
+    console.log(type);
     // TODO count score
     const score = (100 / body.total) * body.correctAnswers;
     const subject = `Your ${type} test score is ${score} %!`;
-
+    console.log('subject is', subject);
     const emailBody = this.#createTemplate(body, subject);
     this.#sender.setApiKey(process.env.SENDGRID_API_KEY);
     const msg = {
