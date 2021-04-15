@@ -1,10 +1,11 @@
 const path = require('path');
-const TestsList = require('../../model/questions');
+const TestsList = require('../../helpers/parseQuestions');
 const { httpCode } = require('../../helpers/constants');
 const Testing = require('../../model/testingTheory');
 const EmailService = require('../../services/email');
 
 const testingTheoryDb = path.join(__dirname, '../../db/testingTheory.json');
+
 const createResultTheory = async (req, res, next) => {
   try {
     const { _id, email, name } = req.user;
