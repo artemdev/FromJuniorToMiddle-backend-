@@ -48,7 +48,7 @@ const createTechResult = async (req, res, next) => {
     const correctAnswers = questions.filter(el => el.rightAnswer === true);
 
     const technicalQA = await Tests.create({
-      type: 'technicalQA',
+      type: 'technical',
       questions,
       total: questions.length,
       correctAnswers: correctAnswers.length,
@@ -193,7 +193,7 @@ const createTheoryResult = async (req, res, next) => {
       question: question.question,
     }));
     const technicalQA = await Tests.create({
-      type: 'testingTheory',
+      type: 'theory',
       questions: newQuestions,
       total: questions.length,
       correctAnswers: correctAnswers.length,
