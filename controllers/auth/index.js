@@ -33,8 +33,7 @@ const reg = async (req, res) => {
       },
     });
   } catch (e) {
-    console.log(e);
-    res.status(httpCode.BAD_REQUEST).json({
+    return res.status(httpCode.BAD_REQUEST).json({
       message: 'Ошибка от Joi или другой валидационной библиотеки',
     });
   }
@@ -73,7 +72,8 @@ const login = async (req, res) => {
 };
 
 const logout = async (req, res) => {
-  const id = req.user.id;
+  console.log(req.user);
+  const id = req.user._id;
   Users.updateToken(id, null);
   return res.status(httpCode.NO_CONTENT).json({ message: 'Nothing' });
 };

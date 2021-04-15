@@ -4,8 +4,13 @@ const EmailService = require('../../services/email');
 const sendEmail = async (_, res) => {
   try {
     const email = 'artem.zimovets@gmail.com';
-    const name = 'Artem';
+
     const emailService = new EmailService(process.env.NODE_ENV);
+
+    // const title = type ?? "Technical test" || "Theory test"
+    // type = "tech"
+    const name = 'Artem';
+    const type = 'theory';
     const questions = [
       {
         question:
@@ -29,9 +34,6 @@ const sendEmail = async (_, res) => {
           'Programming languageProgramming language Programming language Programming language',
       },
     ];
-    // const title = type ?? "Technical test" || "Theory test"
-    // type = "tech"
-    const type = 'theory';
     const body = {
       // score: 90,
       total: 10,
