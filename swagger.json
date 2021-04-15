@@ -431,100 +431,6 @@
          }
       },
       "/tests/testingTheory/result":{
-         "get":{
-            "tags":[
-               "testingTheoryResult"
-            ],
-            "summary":"get testing theory result",
-            "parameters":[
-               
-            ],
-            "security":[
-               {
-                  "Bearer":[
-                     
-                  ]
-               }
-            ],
-            "requestBody":{
-               "description":"get tests theory result"
-            },
-            "responses":{
-               "200":{
-                  "description":"theory testing results successfully received",
-                  "content":{
-                     "application/json":{
-                        "schema":{
-                           "$ref":"#/components/schemas/getTestResultResponse"
-                        }
-                     }
-                  }
-               },
-               "400":{
-                  "description":"Bad request (invalid request body)",
-                  "content":{
-                     
-                  }
-               },
-               "403":{
-                  "description":"User is unauthorized",
-                  "content":{
-                     
-                  }
-               }
-            }
-         },
-         "post":{
-            "tags":[
-               "testingTheoryResult"
-            ],
-            "summary":"post user testing theory results",
-            "parameters":[
-               
-            ],
-            "security":[
-               {
-                  "Bearer":[
-                     
-                  ]
-               }
-            ],
-               "requestBody":{
-               "description":"Test theory object",
-               "required":true,
-               "content":{
-                  "application/json":{
-                     "schema":{
-                        "$ref":"#/components/schemas/postTestRequest"
-                     }
-                  }
-               }
-            },
-            "responses":{
-               "201":{
-                  "description":"theory testing results successfully posted ",
-                  "content":{
-                     "application/json":{
-                        "schema":{
-                           "$ref":"#/components/schemas/postTestResultResponse"
-                        }
-                     }
-                  }
-               },
-               "400":{
-                  "description":"Bad request (invalid request body)",
-                  "content":{
-                     
-                  }
-               },
-               "403":{
-                  "description":"User is unauthorized",
-                  "content":{
-                     
-                  }
-               }
-            }
-         },
          "delete":{
             "tags":[
                "testingTheoryResult"
@@ -532,6 +438,13 @@
             "summary":"delete testing theory result",
             "parameters":[
                
+            ],
+            "security":[
+               {
+                  "Bearer":[
+                     
+                  ]
+               }
             ],
             "requestBody":{
                "description":"delete tests theory result"
@@ -563,100 +476,6 @@
          }
       },
       "/tests/technicalQA/result":{
-         "get":{
-            "tags":[
-               "technicalQAResult"
-            ],
-            "summary":"get technical QA result",
-            "parameters":[
-               
-            ],
-            "security":[
-               {
-                  "Bearer":[
-                     
-                  ]
-               }
-            ],
-            "requestBody":{
-               "description":"get technical QA result"
-            },
-            "responses":{
-               "200":{
-                  "description":"technical QA results successfully received",
-                  "content":{
-                     "application/json":{
-                        "schema":{
-                           "$ref":"#/components/schemas/getTestResultResponse"
-                        }
-                     }
-                  }
-               },
-               "400":{
-                  "description":"Bad request (invalid request body)",
-                  "content":{
-                     
-                  }
-               },
-               "403":{
-                  "description":"User is unauthorized",
-                  "content":{
-                     
-                  }
-               }
-            }
-         },
-         "post":{
-            "tags":[
-               "technicalQAResult"
-            ],
-            "summary":"post user technical QA results",
-            "parameters":[
-               
-            ],
-            "security":[
-               {
-                  "Bearer":[
-                     
-                  ]
-               }
-            ],
-               "requestBody":{
-               "description":"Technical QA object",
-               "required":true,
-               "content":{
-                  "application/json":{
-                     "schema":{
-                        "$ref":"#/components/schemas/postTestRequest"
-                     }
-                  }
-               }
-            },
-            "responses":{
-               "201":{
-                  "description":"technical QA results successfully posted ",
-                  "content":{
-                     "application/json":{
-                        "schema":{
-                           "$ref":"#/components/schemas/postTestResultResponse"
-                        }
-                     }
-                  }
-               },
-               "400":{
-                  "description":"Bad request (invalid request body)",
-                  "content":{
-                     
-                  }
-               },
-               "403":{
-                  "description":"User is unauthorized",
-                  "content":{
-                     
-                  }
-               }
-            }
-         },
          "delete":{
             "tags":[
                "technicalQAResult"
@@ -664,6 +483,13 @@
             "summary":"delete technical QA result",
             "parameters":[
                
+            ],
+            "security":[
+               {
+                  "Bearer":[
+                     
+                  ]
+               }
             ],
             "requestBody":{
                "description":"delete technical QA result"
@@ -986,9 +812,66 @@
                   "description":"Request body"
                }
             },
-            "example":[
-                  "Paste questions here"
-            ]
+            "example":
+            [
+               {"question":"What are the main benefits of automated testing?",
+                  "questionId":3,
+                  "userAnswer":"All options are correct"
+               },
+               {
+                  "question":"What are the main types of locators in Selenium?",
+                  "questionId":4,
+                  "userAnswer":"Name, TagName"
+                  },
+               {
+                  "question":"Most often, viewing elements in the Google Chrome browseron windows is launched by the button",
+                  "questionId":6,
+                  "userAnswer":"F12"
+                  },
+                  {
+                     "question":"Most often, viewing items in the Google Chrome browser onMac is launched by this key combination",
+                     "questionId":7,
+                     "userAnswer":"Cmd+Opt+J"
+                     },
+                     {
+                        "question":"navigate().forward(). This navigation command in Selenium:",
+                        "questionId":9,
+                        "userAnswer":"There is no such command"
+                        },
+                        {
+                           "question":"Which of the following is a bug report attribute",
+                           "questionId":12,
+                           "userAnswer":"All options are correct"
+                           },
+                           {"question":"Testing outside of normal performance is",
+                            "questionId":15,
+                            "userAnswer":"Stress testing"
+                            },
+                            {
+                               "question":"Checking the onBlur field is done",
+                               "questionId":17,
+                               "userAnswer":"When we press the submit button"
+                               },
+                              {
+                                  "question":"What's wrong appealing to Smoke and sanity tests?",
+                                  "questionId":18,
+                                  "userAnswer":"All options are incorrent"
+                              },
+                                  {
+                                     "question":"White box testing does not concern",
+                                     "questionId":21,
+                                     "userAnswer":"Causes and effects of coverage"
+                                    },
+                                    {
+                                       "question":"What is the order of priority testing?",
+                                       "questionId":23,
+                                       "userAnswer":"Module >> System >> Acceptance test"
+                                    },
+                                       {
+                                          "question":"Which of the following is not an iterative model?",
+                                          "questionId":27,
+                                          "userAnswer":"V model"}
+                                       ]
          },
 
          "postTestResponse":{
@@ -1054,144 +937,7 @@
                }
             ]
          },
-         "getTestResultResponse":{
-            "type":"array",
-            "items":{
-               "type":"object",
-               "properties":{
-                  "resultTheory":{
-                     "type":"object",
-                     "description":"result object"
-                  },
-                  "_id":{
-                     "type":"string",
-                     "description":"result id"
-                  },
-                  "userRA":{
-                     "type":"array",
-                     "description":"array of results"
-                  },
-                  "id":{
-                     "type":"string",
-                     "description":"result id"
-                  },
-                  "answerId":{
-                     "type":"number",
-                     "description":"answer id"
-                  },
-                  "answer":{
-                     "type":"number",
-                     "description":"answer text"
-                  },
-                  "owner":{
-                     "type":"object",
-                     "description":"owner object"
-                  },
-                  "email":{
-                     "type":"string",
-                     "description":"owner email"
-                  }
-               }
-            },
-            "example":[
-               {
-                  "status":"success",
-                  "code":200,
-                  "data":{
-                     "resultTheory":{
-                        "_id":"606f0c227bf51409ac9c8131",
-                        "userRA":[
-                           {
-                              "_id":"606f0c227bf51409ac9c8132",
-                              "answerId":10,
-                              "answer":"Kanban"
-                           },
-                           {
-                              "_id":"606f0c227bf51409ac9c8133",
-                              "answerId":14,
-                              "answer":"All requirements must be known at the beginning of the project life cycle"
-                           },
-                           {
-                              
-                           }
-                        ],
-                        "owner":{
-                           "email":"test@gmail.com"
-                        }
-                     }
-                  }
-               }
-            ]
-         },
-         "postTestResultResponse":{
-            "type":"array",
-            "items":{
-               "type":"object",
-               "properties":{
-                  "resultTheory":{
-                     "type":"object",
-                     "description":"result object"
-                  },
-                  "_id":{
-                     "type":"string",
-                     "description":"result id"
-                  },
-                  "userRA":{
-                     "type":"array",
-                     "description":"array of results"
-                  },
-                  "id":{
-                     "type":"string",
-                     "description":"result id"
-                  },
-                  "answerId":{
-                     "type":"number",
-                     "description":"answer id"
-                  },
-                  "answer":{
-                     "type":"number",
-                     "description":"answer text"
-                  },
-                  "owner":{
-                     "type":"object",
-                     "description":"owner object"
-                  },
-                  "email":{
-                     "type":"string",
-                     "description":"owner email"
-                  }
-               }
-            },
-            "example":[
-               {
-                  "status":"success",
-                  "code":200,
-                  "data":{
-                     "resultTheory":{
-                        "_id":"606f0c227bf51409ac9c8131",
-                        "userRA":[
-                           {
-                              "_id":"606f0c227bf51409ac9c8132",
-                              "answerId":10,
-                              "answer":"Kanban"
-                           },
-                           {
-                              "_id":"606f0c227bf51409ac9c8133",
-                              "answerId":14,
-                              "answer":"All requirements must be known at the beginning of the project life cycle"
-                           },
-                           {
-                              
-                           }
-                        ],
-                        "owner":{
-                           "email":"test@gmail.com"
-                        }
-                     }
-                  }
-               }
-            ]
-         },
+
          "deleteTestResultResponse":{
             "type":"array",
             "items":{
@@ -1222,15 +968,78 @@
          "emailRequest":{
             "type":"object",
             "required":[
-               "email"
+               "type", "score", "total", "questions", "question", "answer", "rightAnswer", "name", "correctAnser"
             ],
             "properties":{
-               "email":{
+               "type":{
                   "type":"string",
-                  "description":"User's email",
-                  "format":"email",
-                  "example":"1@gmail.com"
+                  "description":"type of tests",
+                  "example":"theory"
+               },
+               "score":{
+                  "type":"number",
+                  "description":"score",
+                  "example":"90"
+               },
+               "total":{
+                  "type":"number",
+                  "description":"total score",
+                  "example":"10"
+               },
+               "questions":{
+                  "type":"array",
+                  "description":"array of questions",
+                  "example":"questions"
+               },
+               "question":{
+                  "type":"string",
+                  "description":"question text",
+                  "example":"What is JS"
+               },
+               "answer":{
+                  "type":"string",
+                  "description":"answer text",
+                  "example":"Programming language"
+               },
+               "rightAnswer":{
+                  "type":"string",
+                  "description":"right answer text",
+                  "example":"Programming language"
+               },
+               "name":{
+                  "type":"string",
+                  "description":"user name",
+                  "example":"John"
+               },
+               "correctAnswers":{
+                  "type":"number",
+                  "description":"correct answer",
+                  "example":"9"
                }
+            },
+            "example": {
+                  "type": "theory",
+                  "score": 90,
+                  "total": 10,
+                  "questions": [
+                  {
+                     "question": "What is JS What is JS What is JS What is JS What is JS What is JS What is JS",
+                     "answer": "What is JS What is JS What is JS What is JS",
+                     "rightAnswer": "Programming languageProgramming language Programming language Programming language"
+                  },
+                  {
+                     "question": "What is JS What is JS What is JS What is JS What is JS What is JS What is JS",
+                     "answer": "What is JS What is JS What is JS What is JS",
+                     "rightAnswer": "Programming languageProgramming language Programming language Programming language"
+                  },
+                  {
+                     "question": "What is JS What is JS What is JS What is JS What is JS What is JS What is JS",
+                     "answer": "What is JS What is JS What is JS What is JS",
+                     "rightAnswer": "Programming languageProgramming language Programming language Programming language"
+                  }
+               ],
+                  "name": "John",
+                  "correctAnswers": 9
             }
          },
          "emailResponse":{
