@@ -1,6 +1,10 @@
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
+<<<<<<< HEAD
 const { secret } = process.env.JWT;
+=======
+const { secret } = require('../config/app').JWT;
+>>>>>>> 8ec4c7bc473e4d152c84be481fcb4e950cedb405
 const { httpCode } = require('../helpers/constants');
 
 module.exports = (req, res, next) => {

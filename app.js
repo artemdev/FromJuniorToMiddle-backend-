@@ -9,12 +9,14 @@ const swaggerDocument = require('./swagger.json');
 // const path = require('path');
 
 // const { limiter } = require("./helpers/rate-limit");
+
 const { httpCode } = require('./helpers/constants');
 require('dotenv').config();
 
 const authRouter = require('./routes/api/auth');
 const testsRouter = require('./routes/tests');
 const emailsRouter = require('./routes/emails');
+
 
 const app = express();
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
@@ -32,7 +34,7 @@ app.use('/auth', authRouter);
 app.use('/tests', testsRouter);
 // app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-app.use('/emails', emailsRouter);
+app.use("/emails", emailsRouter);
 
 app.use((req, res) => {
   res.status(httpCode.NOT_FOUND).json({ message: 'Not found' });

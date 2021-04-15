@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 const gravatar = require('gravatar');
 const SALT_WORK_FACTOR = 8;
 const { Schema, model } = mongoose;
+
 const userSchema = new Schema(
   {
     name: {
