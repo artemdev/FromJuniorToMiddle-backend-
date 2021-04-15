@@ -1,8 +1,8 @@
-const TestingTheory = require('./schemas/technicalQA');
+const Test = require('./schemas/test');
 
-const addResult = async body => {
+const create = async body => {
   try {
-    const result = await TestingTheory.create(body);
+    const result = await Test.create(body);
     return result;
   } catch (e) {
     console.error(e.message);
@@ -11,9 +11,8 @@ const addResult = async body => {
 
 const findResultByUserId = async userId => {
   try {
-    const result = await TestingTheory.findOne({
+    const result = await Test.findOne({
       owner: userId,
-      type: 'the',
     }).populate({
       path: 'owner',
       select: 'email -_id',
@@ -26,7 +25,7 @@ const findResultByUserId = async userId => {
 
 const deleteResult = async userId => {
   try {
-    const result = await TestingTheory.remove({
+    const result = await Test.remove({
       owner: userId,
     });
     return result;
@@ -36,7 +35,7 @@ const deleteResult = async userId => {
 };
 
 module.exports = {
-  addResult,
+  create,
   findResultByUserId,
   deleteResult,
 };
