@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 
 // const { secret } = process.env.JWT;
+const SECRET_KEY = process.env.JWT_SECRET;
 console.log('SECRET>>>>>>>>', process.env.JWT);
 const authHelper = require('../../helpers/authHelper');
 
@@ -33,10 +34,16 @@ const reg = async (req, res) => {
     }
 
     const newUser = await Users.create(req.body);
-    const userId = newUser.id;
-    const token = updateToken(userId).then(tokens => res.json(tokens));
-    // const payload = { id };
-    // const token = jwt.sign(payload, SECRET_KEY, { expiresIn: '2h' });
+
+    // const userId = newUser.id;
+    // const token = updateToken(userId).then(tokens => res.json(tokens));
+    // // const payload = { id };
+    // // const token = jwt.sign(payload, SECRET_KEY, { expiresIn: '2h' });
+
+    const id = newUser.id;
+    const payload = { id };
+    const token = jwt.sign(payload, SECRET_KEY, { expiresIn: '2h' });
+    await Users.updateToken(id, token);
 
     return res.status(httpCode.CREATED).json({
       status: 'success',

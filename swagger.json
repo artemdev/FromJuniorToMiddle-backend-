@@ -297,8 +297,16 @@
                   ]
                }
             ],
-            "requestBody":{
-               "description":"Post technical questions"
+               "requestBody":{
+               "description":"Technical QA object",
+               "required":true,
+               "content":{
+                  "application/json":{
+                     "schema":{
+                        "$ref":"#/components/schemas/postTestRequest"
+                     }
+                  }
+               }
             },
             "responses":{
                "200":{
@@ -385,8 +393,16 @@
                   ]
                }
             ],
-            "requestBody":{
-               "description":"post tests - theory questions"
+               "requestBody":{
+               "description":"Test theory object",
+               "required":true,
+               "content":{
+                  "application/json":{
+                     "schema":{
+                        "$ref":"#/components/schemas/postTestRequest"
+                     }
+                  }
+               }
             },
             "responses":{
                "200":{
@@ -473,8 +489,16 @@
                   ]
                }
             ],
-            "requestBody":{
-               "description":"post tests - theory results"
+               "requestBody":{
+               "description":"Test theory object",
+               "required":true,
+               "content":{
+                  "application/json":{
+                     "schema":{
+                        "$ref":"#/components/schemas/postTestRequest"
+                     }
+                  }
+               }
             },
             "responses":{
                "201":{
@@ -597,8 +621,16 @@
                   ]
                }
             ],
-            "requestBody":{
-               "description":"post technical QA results"
+               "requestBody":{
+               "description":"Technical QA object",
+               "required":true,
+               "content":{
+                  "application/json":{
+                     "schema":{
+                        "$ref":"#/components/schemas/postTestRequest"
+                     }
+                  }
+               }
             },
             "responses":{
                "201":{
@@ -705,8 +737,16 @@
             "parameters":[
                
             ],
-            "requestBody":{
-               "description":"Post users emails"
+               "requestBody":{
+               "description":"Email object",
+               "required":true,
+               "content":{
+                  "application/json":{
+                     "schema":{
+                        "$ref":"#/components/schemas/emailRequest"
+                     }
+                  }
+               }
             },
             "responses":{
                "201":{
@@ -937,6 +977,20 @@
                }
             ]
          },
+
+          "postTestRequest":{
+            "type":"object",
+            "properties":{
+               "Request body":{
+                  "type":"string",
+                  "description":"Request body"
+               }
+            },
+            "example":[
+                  "Paste questions here"
+            ]
+         },
+
          "postTestResponse":{
             "type":"array",
             "items":{
@@ -1164,6 +1218,20 @@
                   "message":"Results deleted"
                }
             ]
+         },
+         "emailRequest":{
+            "type":"object",
+            "required":[
+               "email"
+            ],
+            "properties":{
+               "email":{
+                  "type":"string",
+                  "description":"User's email",
+                  "format":"email",
+                  "example":"1@gmail.com"
+               }
+            }
          },
          "emailResponse":{
             "type":"array",
