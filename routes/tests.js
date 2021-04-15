@@ -11,15 +11,15 @@ const {
 } = require('../controllers/tests');
 
 const path = require('path');
-const Tests = require('../helpers/parseQuestions');
+const { listRandomTests } = require('../helpers/parseQuestions');
 
 const testingTheory = path.join(__dirname, '../db/testingTheory.json');
 const technicalQA = path.join(__dirname, '../db/technicalQA.json');
 
 /* GET users listing. */
-router.get('/technicalQA', async (_req, res, next) => {
+router.get('/technical/random', async (_req, res, next) => {
   try {
-    const tests = await Tests.listRandomTests(technicalQA);
+    const tests = await listRandomTests(technicalQA);
     return res.json({
       status: 'success',
       code: 200,
@@ -32,9 +32,9 @@ router.get('/technicalQA', async (_req, res, next) => {
   }
 });
 
-router.get('/testingTheory', async (_req, res, next) => {
+router.get('/theory/random', async (_req, res, next) => {
   try {
-    const tests = await Tests.listRandomTests(testingTheory);
+    const tests = await listRandomTests(testingTheory);
     return res.json({
       status: 'success',
       code: 200,
@@ -47,20 +47,24 @@ router.get('/testingTheory', async (_req, res, next) => {
   }
 });
 
-router.get('/technicalQA/result', guard, getTechResult);
+// router.get('/technicalQA/result', guard, getTechResult);
 router.post('/technicalQA/result', guard, createTechResult);
 router.delete('/technicalQA/result', guard, removeResult);
 
-router.get('/testingTheory/result', guard, getTheoryResult);
+// router.get('/testingTheory/result', guard, getTheoryResult);
 router.post('/testingTheory/result', guard, createTheoryResult);
 router.delete('/testingTheory/result', guard, removeResult);
 // better names
 // router.post('/technical', guard, createTechResult);
-// router.get('/technical', guard, getTechResult);
-// router.delete('/technical', guard, removeResult);
+router.post('/technical', guard, createTechResult);
+router.post('/theory', guard, createTheoryResult);
+router.get('/technical', guard, getTechResult);
+router.get('/theory', guard, getTheoryResult);
+router.delete('/technical', guard, removeResult);
+router.delete('/theory', guard, removeResult);
 
 // router.post('/theory', guard, createTheoryResult);
-// router.get('/theory', guard, getTheoryResult);
+
 // router.delete('/theory', guard, removeResult);
 
 module.exports = router;
