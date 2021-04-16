@@ -10,43 +10,14 @@ const {
   getTheoryResult,
 } = require("../controllers/tests");
 
-const path = require("path");
-const { listRandomTests } = require("../helpers/parseQuestions");
-
-const testingTheory = path.join(__dirname, "../db/testingTheory.json");
-const technicalQA = path.join(__dirname, "../db/technicalQA.json");
+const {
+  getTechnicalRandomTests,
+  getTheoryRandomTests,
+} = require("../controllers/randomTests");
 
 /* GET users listing. */
-router.get("/technical/random", async (_req, res, next) => {
-  try {
-    const tests = await listRandomTests(technicalQA);
-    return res.json({
-      status: "success",
-      code: 200,
-      data: {
-        tests,
-      },
-    });
-  } catch (e) {
-    next(e);
-  }
-});
-
-router.get("/theory/random", async (_req, res, next) => {
-  try {
-    const tests = await listRandomTests(testingTheory);
-    return res.json({
-      status: "success",
-      code: 200,
-      data: {
-        tests,
-      },
-    });
-  } catch (e) {
-    next(e);
-  }
-});
-
+router.get("/technical/random", getTechnicalRandomTests);
+router.get("/theory/random", getTheoryRandomTests);
 router.post("/technical", guard, createTechResult);
 router.post("/theory", guard, createTheoryResult);
 router.get("/technical", guard, getTechResult);
