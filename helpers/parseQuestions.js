@@ -8,7 +8,13 @@ const listRandomTests = async path => {
         return 0.5 - Math.random();
       })
       .slice(0, 12);
-    return parsedData;
+    // вытянуть правильные
+    // rightAnswer
+    const final = parsedData.map(function (question) {
+      delete question.rightAnswer;
+      return question;
+    });
+    return final;
   } catch (error) {
     console.log(error);
   }
