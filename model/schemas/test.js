@@ -15,10 +15,6 @@ const testsSchema = new Schema(
           // required: [true, "Answer is required"],
         },
         rightAnswer: {
-          type: String,
-          // required: [true, "Answer is required"],
-        },
-        isCorrect: {
           type: Boolean,
           // required: [true, "RightAnswer is required"],
         },
