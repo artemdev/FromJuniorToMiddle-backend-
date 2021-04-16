@@ -123,7 +123,6 @@ const createTheoryResult = async (req, res, _) => {
       name: technicalQA.name,
       correctAnswers: technicalQA.correctAnswers,
     };
-    console.log('theory body is', body);
     const emailService = new EmailService(process.env.NODE_ENV);
     await emailService.sendEmail(email, body, technicalQA.type);
 
@@ -213,7 +212,6 @@ const createTechResult = async (req, res, _) => {
       name: technicalQA.name,
       correctAnswers: technicalQA.correctAnswers,
     };
-    console.log('tech body is', body);
     const emailService = new EmailService(process.env.NODE_ENV);
     await emailService.sendEmail(email, body, technicalQA.type);
 
