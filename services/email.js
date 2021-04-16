@@ -85,7 +85,7 @@ class EmailService {
     console.log(email);
     console.log(type);
     // TODO count score
-    const score = (100 / body.total) * body.correctAnswers;
+    const score = Math.round((100 / body.total) * body.correctAnswers);
     const subject = `Your ${type} test score is ${score} %!`;
     console.log('subject is', subject);
     const emailBody = this.#createTemplate(body, subject);
