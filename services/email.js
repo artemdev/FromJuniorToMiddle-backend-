@@ -25,7 +25,7 @@ class EmailService {
 
   #createTemplate(body, subject) {
     const mailGenerator = new this.#GenerateTemplate({
-      theme: 'neopolitan',
+      theme: 'salted',
       product: {
         name: subject,
         link: this.link,
@@ -39,7 +39,13 @@ class EmailService {
         table: body.questions.map(item => {
           return {
             title: item.question,
-            data: [{ answer: item.answer, correctAnswer: item.answer }],
+            data: [
+              {
+                answer: item.answer,
+                Correct: (item.isCorrect && 'Yes') || 'No',
+                correctAnswer: item.correctAnswer,
+              },
+            ],
           };
         }),
       },
@@ -92,7 +98,8 @@ class EmailService {
     this.#sender.setApiKey(process.env.SENDGRID_API_KEY);
     const msg = {
       to: email,
-      from: 'artwayprojects@gmail.com',
+      // from: 'artwayprojects@gmail.com',
+      from: 'valentynachudik@gmail.com',
       subject: subject,
       html: emailBody,
     };
