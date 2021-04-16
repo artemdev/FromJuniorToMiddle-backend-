@@ -14,14 +14,12 @@ const getTechResult = async (req, res, next) => {
     const token = req.get('Authorization')?.split(' ')[1];
     const user = await Users.findByToken(token);
     const userId = user._id;
-    const resultQA = await Tests.findTechResultByUserId(userId);
+    const data = await Tests.findTechResultByUserId(userId);
 
     return res.status(httpCode.OK).json({
       status: 'success',
       code: httpCode.OK,
-      data: {
-        resultQA,
-      },
+      data,
     });
   } catch (e) {
     return res.status(httpCode.NOT_FOUND).json({
@@ -38,14 +36,12 @@ const getTheoryResult = async (req, res, next) => {
     const token = req.get('Authorization')?.split(' ')[1];
     const user = await Users.findByToken(token);
     const userId = user._id;
-    const resultQA = await Tests.findTheoryResultByUserId(userId);
+    const data = await Tests.findTheoryResultByUserId(userId);
 
     return res.status(httpCode.OK).json({
       status: 'success',
       code: httpCode.OK,
-      data: {
-        resultQA,
-      },
+      data,
     });
   } catch (e) {
     return res.status(httpCode.NOT_FOUND).json({
@@ -147,8 +143,8 @@ const createTheoryResult = async (req, res, _) => {
       name: technicalQA.name,
       correctAnswers: technicalQA.correctAnswers,
     };
-    const emailService = new EmailService(process.env.NODE_ENV);
-    await emailService.sendEmail(email, body, technicalQA.type);
+    // const emailService = new EmailService(process.env.NODE_ENV);
+    // await emailService.sendEmail(email, body, technicalQA.type);
 
     return res.status(httpCode.CREATED).json({
       status: 'success',
@@ -236,8 +232,8 @@ const createTechResult = async (req, res, _) => {
       name: technicalQA.name,
       correctAnswers: technicalQA.correctAnswers,
     };
-    const emailService = new EmailService(process.env.NODE_ENV);
-    await emailService.sendEmail(email, body, technicalQA.type);
+    // const emailService = new EmailService(process.env.NODE_ENV);
+    // await emailService.sendEmail(email, body, technicalQA.type);
 
     return res.status(httpCode.CREATED).json({
       status: 'success',
