@@ -4,6 +4,7 @@ const { httpCode } = require('../../helpers/constants');
 const Tests = require('../../model/tests');
 const Users = require('../../model/users');
 const EmailService = require('../../services/email');
+const { listRandomTests } = require('../../helpers/parseQuestions');
 
 const technicalQuestionsDb = path.join(__dirname, '../../db/technicalQA.json');
 const theoryQuestionsDb = path.join(__dirname, '../../db/testingTheory.json');
@@ -253,10 +254,42 @@ const createTechResult = async (req, res, _) => {
   }
 };
 
+const getTechnicalRandomTests = async (_req, res, next) => {
+  try {
+    const tests = await listRandomTests(technicalQuestionsDb);
+    return res.json({
+      status: 'success',
+      code: 200,
+      data: {
+        tests,
+      },
+    });
+  } catch (e) {
+    next(e);
+  }
+};
+
+const getTheoryRandomTests = async (_req, res, next) => {
+  try {
+    const tests = await listRandomTests(theoryQuestionsDb);
+    return res.json({
+      status: 'success',
+      code: 200,
+      data: {
+        tests,
+      },
+    });
+  } catch (e) {
+    next(e);
+  }
+};
+
 module.exports = {
   createTechResult,
   getTechResult,
   removeResult,
   createTheoryResult,
   getTheoryResult,
+  getTheoryRandomTests,
+  getTechnicalRandomTests,
 };
