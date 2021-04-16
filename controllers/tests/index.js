@@ -13,14 +13,6 @@ const createTechResult = async (req, res, next) => {
     const userAnswers = req.body;
     const questions = [];
     const testsList = await parseTests(technicalQuestionsDb);
-    // const dataToCheck = testsList.map(
-    //   ({ questionId, question, rightAnswer }) => ({
-    //     questionId,
-    //     question,
-    //     rightAnswer,
-    //   })
-    // );
-
     const dataToCheck = testsList.map(
       ({ questionId, question, rightAnswer }) => ({
         questionId,
@@ -37,33 +29,18 @@ const createTechResult = async (req, res, next) => {
             answer.userAnswer === data.rightAnswer
         )
       ) {
-        dataToCheck.find(
-          (data) => {
-            questions.push({
-              questionId: answer.questionId,
-              question: answer.question,
-              answer: answer.userAnswer,
-              rightAnswer: data.rightAnswer,
-              isCorrect: true,
-            });
-          }
-          // answer.questionId === data.questionId &&
-          // answer.userAnswer === data.rightAnswer
-        );
-        // questions.push({
-        //   questionId: answer.questionId,
-        //   question: answer.question,
-        //   answer: answer.userAnswer,
-        //   rightAnswer: answer.rightAnswer,
-        //   isCorrect: true,
-        // });
+        questions.push({
+          questionId: answer.questionId,
+          question: answer.question,
+          answer: answer.userAnswer,
+          rightAnswer: true,
+        });
       } else {
         questions.push({
           questionId: answer.questionId,
           question: answer.question,
           answer: answer.userAnswer,
-          rightAnswer: answer.rightAnswer,
-          isCorrect: false,
+          rightAnswer: false,
         });
       }
     });
@@ -98,8 +75,8 @@ const createTechResult = async (req, res, next) => {
       };
 
       console.log(body);
-      // const emailService = new EmailService(process.env.NODE_ENV);
-      // await emailService.sendEmail(email, body, technicalQA.type);
+      const emailService = new EmailService(process.env.NODE_ENV);
+      await emailService.sendEmail(email, body, technicalQA.type);
 
       return res.status(httpCode.CREATED).json({
         status: "success",
@@ -234,8 +211,8 @@ const createTheoryResult = async (req, res, next) => {
       name: technicalQA.name,
       correctAnswers: technicalQA.correctAnswers,
     };
-    // const emailService = new EmailService(process.env.NODE_ENV);
-    // await emailService.sendEmail(email, body, technicalQA.type);
+    const emailService = new EmailService(process.env.NODE_ENV);
+    await emailService.sendEmail(email, body, technicalQA.type);
 
     return res.status(httpCode.CREATED).json({
       status: "success",
