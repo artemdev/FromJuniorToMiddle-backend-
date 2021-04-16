@@ -2,6 +2,7 @@ const path = require('path');
 const { parseTests } = require('../../helpers/parseQuestions');
 const { httpCode } = require('../../helpers/constants');
 const Tests = require('../../model/tests');
+const Users = require('../../model/users');
 const EmailService = require('../../services/email');
 
 const technicalQuestionsDb = path.join(__dirname, '../../db/technicalQA.json');
@@ -9,26 +10,49 @@ const theoryQuestionsDb = path.join(__dirname, '../../db/testingTheory.json');
 
 const getTechResult = async (req, res, next) => {
   try {
-    const userId = req.user.id;
+    // const userId = req.user.id;
+    const token = req.get('Authorization')?.split(' ')[1];
+    const user = await Users.findByToken(token);
+    const userId = user._id;
     const resultQA = await Tests.findTechResultByUserId(userId);
 
-    if (resultQA) {
-      return res.status(httpCode.OK).json({
-        status: 'success',
-        code: httpCode.OK,
-        data: {
-          resultQA,
-        },
-      });
-    } else {
-      return res.status(httpCode.NOT_FOUND).json({
-        status: 'error',
-        code: httpCode.NOT_FOUND,
-        message: 'Not Found',
-      });
-    }
+    return res.status(httpCode.OK).json({
+      status: 'success',
+      code: httpCode.OK,
+      data: {
+        resultQA,
+      },
+    });
   } catch (e) {
-    next(e);
+    return res.status(httpCode.NOT_FOUND).json({
+      status: 'error',
+      code: httpCode.NOT_FOUND,
+      message: 'Not Found',
+    });
+  }
+};
+
+const getTheoryResult = async (req, res, next) => {
+  try {
+    // const userId = req.user.id;
+    const token = req.get('Authorization')?.split(' ')[1];
+    const user = await Users.findByToken(token);
+    const userId = user._id;
+    const resultQA = await Tests.findTheoryResultByUserId(userId);
+
+    return res.status(httpCode.OK).json({
+      status: 'success',
+      code: httpCode.OK,
+      data: {
+        resultQA,
+      },
+    });
+  } catch (e) {
+    return res.status(httpCode.NOT_FOUND).json({
+      status: 'error',
+      code: httpCode.NOT_FOUND,
+      message: 'Not Found',
+    });
   }
 };
 
@@ -230,30 +254,6 @@ const createTechResult = async (req, res, _) => {
     });
   } catch (e) {
     console.log(e);
-  }
-};
-const getTheoryResult = async (req, res, next) => {
-  try {
-    const userId = req.user.id;
-    const resultTheory = await Tests.findTheoryResultByUserId(userId);
-
-    if (resultTheory) {
-      return res.status(httpCode.OK).json({
-        status: 'success',
-        code: httpCode.OK,
-        data: {
-          resultTheory,
-        },
-      });
-    } else {
-      return res.status(httpCode.NOT_FOUND).json({
-        status: 'error',
-        code: httpCode.NOT_FOUND,
-        message: 'Not Found',
-      });
-    }
-  } catch (e) {
-    next(e);
   }
 };
 
