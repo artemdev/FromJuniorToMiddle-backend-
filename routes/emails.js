@@ -7,5 +7,6 @@ router.post('/', function (req, res) {
 });
 
 router.get('/', express.static('./public/email.html'));
+router.get('/offer', express.static('./public/offer.html'));
 
 module.exports = router;
