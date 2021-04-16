@@ -8,8 +8,6 @@ const listRandomTests = async path => {
         return 0.5 - Math.random();
       })
       .slice(0, 12);
-    // вытянуть правильные
-    // rightAnswer
     const final = parsedData.map(function (question) {
       delete question.rightAnswer;
       return question;
@@ -23,8 +21,7 @@ const listRandomTests = async path => {
 const parseTests = async path => {
   try {
     const data = await fs.readFile(path);
-    const parsedData = JSON.parse(data);
-    return parsedData;
+    return JSON.parse(data);
   } catch (error) {
     console.log(error);
   }
