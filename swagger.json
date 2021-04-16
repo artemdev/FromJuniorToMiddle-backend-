@@ -1,1260 +1,957 @@
 {
-   "openapi":"3.0.1",
-   "info":{
-      "version":"1.0.0",
-      "title":"Hakaton project Testing",
-      "description":"Tests for QA and tech developers",
-      "license":{
-         "name":"MIT",
-         "url":"https://opensource.org/licenses/MIT"
+  "openapi": "3.0.1",
+  "info": {
+    "version": "1.0.0",
+    "title": "Hakaton project Testing",
+    "description": "Tests for QA and tech developers",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "consumes": ["application/json", "multipart/form-data"],
+  "produces": ["application/json"],
+  "servers": [
+    {
+      "url": "http://localhost:3000/"
+    },
+    {
+      "url": "https://intense-stream-90411.herokuapp.com/"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "Authorization endpoints"
+    },
+    {
+      "name": "Login",
+      "description": "Login endpoints"
+    },
+    {
+      "name": "Logout",
+      "description": "Logout endpoints"
+    },
+    {
+      "name": "Current user",
+      "description": "Current user endpoints"
+    },
+    {
+      "name": "technicalQA",
+      "description": "technicalQA endpoints"
+    },
+    {
+      "name": "testingTheory",
+      "description": "testingTheory endpoints"
+    },
+    {
+      "name": "technicalQAResult",
+      "description": "technicalQA results endpoints"
+    },
+    {
+      "name": "testingTheoryResult",
+      "description": "testingTheory results endpoints"
+    },
+    {
+      "name": "emails",
+      "description": "users emails"
+    }
+  ],
+  "paths": {
+    "/auth/register": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "User registration",
+        "parameters": [],
+        "requestBody": {
+          "description": "Registration's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegistrationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User successfully registered",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RegistrationResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "409": {
+            "description": "Provided email already exists",
+            "content": {}
+          }
+        }
       }
-   },
-   "consumes":[
-      "application/json",
-      "multipart/form-data"
-   ],
-   "produces":[
-      "application/json"
-   ],
-   "servers":[
-      {
-         "url":"http://localhost:3000/"
-      },
-      {
-         "url":"https://intense-stream-90411.herokuapp.com/"
+    },
+    "/auth/login": {
+      "post": {
+        "tags": ["Login"],
+        "summary": "User login",
+        "parameters": [],
+        "requestBody": {
+          "description": "Login's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User successfully log in",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "404": {
+            "description": "User with this credentials not registered",
+            "content": {}
+          }
+        }
       }
-   ],
-   "tags":[
-      {
-         "name":"Auth",
-         "description":"Authorization endpoints"
-      },
-      {
-         "name":"Login",
-         "description":"Login endpoints"
-      },
-      {
-         "name":"Logout",
-         "description":"Logout endpoints"
-      },
-      {
-         "name":"Current user",
-         "description":"Current user endpoints"
-      },
-      {
-         "name":"technicalQA",
-         "description":"technicalQA endpoints"
-      },
-      {
-         "name":"testingTheory",
-         "description":"testingTheory endpoints"
-      },
-      {
-         "name":"technicalQAResult",
-         "description":"technicalQA results endpoints"
-      },
-      {
-         "name":"testingTheoryResult",
-         "description":"testingTheory results endpoints"
-      },
-      {
-         "name":"emails",
-         "description":"users emails"
+    },
+    "/auth/logout": {
+      "post": {
+        "tags": ["Logout"],
+        "summary": "User logout",
+        "parameters": [],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "requestBody": {
+          "description": "Logout's object"
+        },
+        "responses": {
+          "200": {
+            "description": "User successfully log out"
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          }
+        }
       }
-   ],
-   "paths":{
-      "/auth/register":{
-         "post":{
-            "tags":[
-               "Auth"
-            ],
-            "summary":"User registration",
-            "parameters":[
-               
-            ],
-            "requestBody":{
-               "description":"Registration's object",
-               "required":true,
-               "content":{
-                  "application/json":{
-                     "schema":{
-                        "$ref":"#/components/schemas/RegistrationRequest"
-                     }
-                  }
-               }
-            },
-            "responses":{
-               "201":{
-                  "description":"User successfully registered",
-                  "content":{
-                     "application/json":{
-                        "schema":{
-                           "$ref":"#/components/schemas/RegistrationResponse"
-                        }
-                     }
-                  }
-               },
-               "400":{
-                  "description":"Bad request (invalid request body)",
-                  "content":{
-                     
-                  }
-               },
-               "409":{
-                  "description":"Provided email already exists",
-                  "content":{
-                     
-                  }
-               }
+    },
+    "/auth/user": {
+      "get": {
+        "tags": ["Current user"],
+        "summary": "current user",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "userId",
+            "required": true,
+            "type": "string",
+            "description": "user's id"
+          }
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "requestBody": {
+          "description": "Current user"
+        },
+        "responses": {
+          "200": {
+            "description": "User successfully found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CurrentUserResponse"
+                }
+              }
             }
-         }
-      },
-      "/auth/login":{
-         "post":{
-            "tags":[
-               "Login"
-            ],
-            "summary":"User login",
-            "parameters":[
-               
-            ],
-            "requestBody":{
-               "description":"Login's object",
-               "required":true,
-               "content":{
-                  "application/json":{
-                     "schema":{
-                        "$ref":"#/components/schemas/LoginRequest"
-                     }
-                  }
-               }
-            },
-            "responses":{
-               "201":{
-                  "description":"User successfully log in",
-                  "content":{
-                     "application/json":{
-                        "schema":{
-                           "$ref":"#/components/schemas/LoginResponse"
-                        }
-                     }
-                  }
-               },
-               "400":{
-                  "description":"Bad request (invalid request body)",
-                  "content":{
-                     
-                  }
-               },
-               "404":{
-                  "description":"User with this credentials not registered",
-                  "content":{
-                     
-                  }
-               }
-            }
-         }
-      },
-      "/auth/logout":{
-         "post":{
-            "tags":[
-               "Logout"
-            ],
-            "summary":"User logout",
-            "parameters":[
-               
-            ],
-            "security":[
-               {
-                  "Bearer":[
-                     
-                  ]
-               }
-            ],
-            "requestBody":{
-               "description":"Logout's object"
-            },
-            "responses":{
-               "200":{
-                  "description":"User successfully log out"
-               },
-               "400":{
-                  "description":"Bad request (invalid request body)",
-                  "content":{
-                     
-                  }
-               }
-            }
-         }
-      },
-      "/auth/user":{
-         "get":{
-            "tags":[
-               "Current user"
-            ],
-            "summary":"current user",
-            "parameters":[
-               {
-                  "in":"path",
-                  "name":"userId",
-                  "required":true,
-                  "type":"string",
-                  "description":"user's id"
-               }
-            ],
-            "security":[
-               {
-                  "Bearer":[
-                     
-                  ]
-               }
-            ],
-            "requestBody":{
-               "description":"Current user"
-            },
-            "responses":{
-               "200":{
-                  "description":"User successfully found",
-                  "content":{
-                     "application/json":{
-                        "schema":{
-                           "$ref":"#/components/schemas/CurrentUserResponse"
-                        }
-                     }
-                  }
-               },
-               "400":{
-                  "description":"Bad request (invalid request body)",
-                  "content":{
-                     
-                  }
-               },
-               "403":{
-                  "description":"User is unauthorized",
-                  "content":{
-                     
-                  }
-               }
-            }
-         }
-      },
-      "/tests/technicalQA":{
-         "get":{
-            "tags":[
-               "technicalQA"
-            ],
-            "summary":"get 12 random technical QA questions",
-            "parameters":[
-               
-            ],
-            "security":[
-               {
-                  "Bearer":[
-                     
-                  ]
-               }
-            ],
-            "requestBody":{
-               "description":"Get technical questions"
-            },
-            "responses":{
-               "200":{
-                  "description":"QA questions successfully received",
-                  "content":{
-                     "application/json":{
-                        "schema":{
-                           "$ref":"#/components/schemas/getTestResponse"
-                        }
-                     }
-                  }
-               },
-               "400":{
-                  "description":"Bad request (invalid request body)",
-                  "content":{
-                     
-                  }
-               },
-               "403":{
-                  "description":"User is unauthorized",
-                  "content":{
-                     
-                  }
-               }
-            }
-         },
-         "post":{
-            "tags":[
-               "technicalQA"
-            ],
-            "summary":"post answers of user in technical QA questions",
-            "parameters":[
-               
-            ],
-            "security":[
-               {
-                  "Bearer":[
-                     
-                  ]
-               }
-            ],
-               "requestBody":{
-               "description":"Technical QA object",
-               "required":true,
-               "content":{
-                  "application/json":{
-                     "schema":{
-                        "$ref":"#/components/schemas/postTestRequest"
-                     }
-                  }
-               }
-            },
-            "responses":{
-               "200":{
-                  "description":"QA questions successfully posted",
-                  "content":{
-                     "application/json":{
-                        "schema":{
-                           "$ref":"#/components/schemas/postTestResponse"
-                        }
-                     }
-                  }
-               },
-               "400":{
-                  "description":"Bad request (invalid request body)",
-                  "content":{
-                     
-                  }
-               },
-               "403":{
-                  "description":"User is unauthorized",
-                  "content":{
-                     
-                  }
-               }
-            }
-         }
-      },
-      "/tests/testingTheory":{
-         "get":{
-            "tags":[
-               "testingTheory"
-            ],
-            "summary":"get random 12 testing theory questions",
-            "parameters":[
-               
-            ],
-            "security":[
-               {
-                  "Bearer":[
-                     
-                  ]
-               }
-            ],
-            "requestBody":{
-               "description":"get  tests - theory questions"
-            },
-            "responses":{
-               "200":{
-                  "description":"theory testing questions successfully received",
-                  "content":{
-                     "application/json":{
-                        "schema":{
-                           "$ref":"#/components/schemas/getTestResponse"
-                        }
-                     }
-                  }
-               },
-               "400":{
-                  "description":"Bad request (invalid request body)",
-                  "content":{
-                     
-                  }
-               },
-               "403":{
-                  "description":"User is unauthorized",
-                  "content":{
-                     
-                  }
-               }
-            }
-         },
-         "post":{
-            "tags":[
-               "testingTheory"
-            ],
-            "summary":"post user answers im testing theory questions",
-            "parameters":[
-               
-            ],
-            "security":[
-               {
-                  "Bearer":[
-                     
-                  ]
-               }
-            ],
-               "requestBody":{
-               "description":"Test theory object",
-               "required":true,
-               "content":{
-                  "application/json":{
-                     "schema":{
-                        "$ref":"#/components/schemas/postTestRequest"
-                     }
-                  }
-               }
-            },
-            "responses":{
-               "200":{
-                  "description":"theory testing questions successfully ",
-                  "content":{
-                     "application/json":{
-                        "schema":{
-                           "$ref":"#/components/schemas/postTestResponse"
-                        }
-                     }
-                  }
-               },
-               "400":{
-                  "description":"Bad request (invalid request body)",
-                  "content":{
-                     
-                  }
-               },
-               "403":{
-                  "description":"User is unauthorized",
-                  "content":{
-                     
-                  }
-               }
-            }
-         }
-      },
-      "/tests/testingTheory/result":{
-         "get":{
-            "tags":[
-               "testingTheoryResult"
-            ],
-            "summary":"get testing theory result",
-            "parameters":[
-               
-            ],
-            "security":[
-               {
-                  "Bearer":[
-                     
-                  ]
-               }
-            ],
-            "requestBody":{
-               "description":"get tests theory result"
-            },
-            "responses":{
-               "200":{
-                  "description":"theory testing results successfully received",
-                  "content":{
-                     "application/json":{
-                        "schema":{
-                           "$ref":"#/components/schemas/getTestResultResponse"
-                        }
-                     }
-                  }
-               },
-               "400":{
-                  "description":"Bad request (invalid request body)",
-                  "content":{
-                     
-                  }
-               },
-               "403":{
-                  "description":"User is unauthorized",
-                  "content":{
-                     
-                  }
-               }
-            }
-         },
-         "post":{
-            "tags":[
-               "testingTheoryResult"
-            ],
-            "summary":"post user testing theory results",
-            "parameters":[
-               
-            ],
-            "security":[
-               {
-                  "Bearer":[
-                     
-                  ]
-               }
-            ],
-               "requestBody":{
-               "description":"Test theory object",
-               "required":true,
-               "content":{
-                  "application/json":{
-                     "schema":{
-                        "$ref":"#/components/schemas/postTestRequest"
-                     }
-                  }
-               }
-            },
-            "responses":{
-               "201":{
-                  "description":"theory testing results successfully posted ",
-                  "content":{
-                     "application/json":{
-                        "schema":{
-                           "$ref":"#/components/schemas/postTestResultResponse"
-                        }
-                     }
-                  }
-               },
-               "400":{
-                  "description":"Bad request (invalid request body)",
-                  "content":{
-                     
-                  }
-               },
-               "403":{
-                  "description":"User is unauthorized",
-                  "content":{
-                     
-                  }
-               }
-            }
-         },
-         "delete":{
-            "tags":[
-               "testingTheoryResult"
-            ],
-            "summary":"delete testing theory result",
-            "parameters":[
-               
-            ],
-            "requestBody":{
-               "description":"delete tests theory result"
-            },
-            "responses":{
-               "200":{
-                  "description":"theory testing results successfully deleted",
-                  "content":{
-                     "application/json":{
-                        "schema":{
-                           "$ref":"#/components/schemas/deleteTestResultResponse"
-                        }
-                     }
-                  }
-               },
-               "400":{
-                  "description":"Bad request (invalid request body)",
-                  "content":{
-                     
-                  }
-               },
-               "403":{
-                  "description":"User is unauthorized",
-                  "content":{
-                     
-                  }
-               }
-            }
-         }
-      },
-      "/tests/technicalQA/result":{
-         "get":{
-            "tags":[
-               "technicalQAResult"
-            ],
-            "summary":"get technical QA result",
-            "parameters":[
-               
-            ],
-            "security":[
-               {
-                  "Bearer":[
-                     
-                  ]
-               }
-            ],
-            "requestBody":{
-               "description":"get technical QA result"
-            },
-            "responses":{
-               "200":{
-                  "description":"technical QA results successfully received",
-                  "content":{
-                     "application/json":{
-                        "schema":{
-                           "$ref":"#/components/schemas/getTestResultResponse"
-                        }
-                     }
-                  }
-               },
-               "400":{
-                  "description":"Bad request (invalid request body)",
-                  "content":{
-                     
-                  }
-               },
-               "403":{
-                  "description":"User is unauthorized",
-                  "content":{
-                     
-                  }
-               }
-            }
-         },
-         "post":{
-            "tags":[
-               "technicalQAResult"
-            ],
-            "summary":"post user technical QA results",
-            "parameters":[
-               
-            ],
-            "security":[
-               {
-                  "Bearer":[
-                     
-                  ]
-               }
-            ],
-               "requestBody":{
-               "description":"Technical QA object",
-               "required":true,
-               "content":{
-                  "application/json":{
-                     "schema":{
-                        "$ref":"#/components/schemas/postTestRequest"
-                     }
-                  }
-               }
-            },
-            "responses":{
-               "201":{
-                  "description":"technical QA results successfully posted ",
-                  "content":{
-                     "application/json":{
-                        "schema":{
-                           "$ref":"#/components/schemas/postTestResultResponse"
-                        }
-                     }
-                  }
-               },
-               "400":{
-                  "description":"Bad request (invalid request body)",
-                  "content":{
-                     
-                  }
-               },
-               "403":{
-                  "description":"User is unauthorized",
-                  "content":{
-                     
-                  }
-               }
-            }
-         },
-         "delete":{
-            "tags":[
-               "technicalQAResult"
-            ],
-            "summary":"delete technical QA result",
-            "parameters":[
-               
-            ],
-            "requestBody":{
-               "description":"delete technical QA result"
-            },
-            "responses":{
-               "200":{
-                  "description":"technical QA results successfully deleted",
-                  "content":{
-                     "application/json":{
-                        "schema":{
-                           "$ref":"#/components/schemas/deleteTestResultResponse"
-                        }
-                     }
-                  }
-               },
-               "400":{
-                  "description":"Bad request (invalid request body)",
-                  "content":{
-                     
-                  }
-               },
-               "403":{
-                  "description":"User is unauthorized",
-                  "content":{
-                     
-                  }
-               }
-            }
-         }
-      },
-      "/emails":{
-         "get":{
-            "tags":[
-               "emails"
-            ],
-            "summary":"get users emails",
-            "parameters":[
-               
-            ],
-            "requestBody":{
-               "description":"Get user emails"
-            },
-            "responses":{
-               "200":{
-                  "description":"users emails received",
-                  "content":{
-                     "application/json":{
-                        
-                     }
-                  }
-               },
-               "400":{
-                  "description":"Bad request (invalid request body)",
-                  "content":{
-                     
-                  }
-               },
-               "403":{
-                  "description":"User is unauthorized",
-                  "content":{
-                     
-                  }
-               }
-            }
-         },
-         "post":{
-            "tags":[
-               "emails"
-            ],
-            "summary":"post users emails ",
-            "parameters":[
-               
-            ],
-               "requestBody":{
-               "description":"Email object",
-               "required":true,
-               "content":{
-                  "application/json":{
-                     "schema":{
-                        "$ref":"#/components/schemas/emailRequest"
-                     }
-                  }
-               }
-            },
-            "responses":{
-               "201":{
-                  "description":"users email sent",
-                  "content":{
-                     "application/json":{
-                        "schema":{
-                           "$ref":"#/components/schemas/emailResponse"
-                        }
-                     }
-                  }
-               },
-               "400":{
-                  "description":"Bad request (invalid request body)",
-                  "content":{
-                     
-                  }
-               },
-               "403":{
-                  "description":"User is unauthorized",
-                  "content":{
-                     
-                  }
-               }
-            }
-         }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "403": {
+            "description": "User is unauthorized",
+            "content": {}
+          }
+        }
       }
-   },
-   "components":{
-      "schemas":{
-         "RegistrationRequest":{
-            "type":"object",
-            "required":[
-               "email",
-               "password"
-            ],
-            "properties":{
-               "email":{
-                  "type":"string",
-                  "description":"User's email",
-                  "format":"email",
-                  "example":"1@gmail.com"
-               },
-               "password":{
-                  "type":"string",
-                  "description":"User's password",
-                  "example":"qwerty123"
-               }
-            },
-            "example":{
-               "email":"1@gmail.com",
-               "password":"qwerty123"
+    },
+    "/tests/technical/random": {
+      "get": {
+        "tags": ["technicalQA"],
+        "summary": "get 12 random technical QA questions",
+        "parameters": [],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "requestBody": {
+          "description": "Get technical questions"
+        },
+        "responses": {
+          "200": {
+            "description": "QA questions successfully received",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/getTestResponse"
+                }
+              }
             }
-         },
-         "RegistrationResponse":{
-            "type":"array",
-            "items":{
-               "type":"object",
-               "properties":{
-                  "email":{
-                     "type":"string",
-                     "description":"User's email",
-                     "format":"email",
-                     "example":"1@gmail.com"
-                  },
-                  "name":{
-                     "type":"string",
-                     "description":"User's name",
-                     "format":"name",
-                     "example":"John"
-                  },
-                  "avatar":{
-                     "type":"string",
-                     "description":"User's avatar",
-                     "format":"avatar"
-                  },
-                  "userId":{
-                     "type":"number",
-                     "description":"User's id",
-                     "example":"32143232436545474"
-                  }
-               }
-            },
-            "example":{
-               "status":"success",
-               "code":201,
-               "data":{
-                  "email":"test@gmail.com",
-                  "name":"test",
-                  "avatar":"https://s.gravatar.com/avatar/1aedb8d9dc4751e229a335e371db8058?s=250"
-               }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "403": {
+            "description": "User is unauthorized",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/tests/technical": {
+      "post": {
+        "tags": ["technicalQA"],
+        "summary": "post answers of user in technical QA questions",
+        "parameters": [],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "requestBody": {
+          "description": "Technical QA object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/postTestRequest"
+              }
             }
-         },
-         "LoginRequest":{
-            "type":"object",
-            "required":[
-               "email",
-               "password"
-            ],
-            "properties":{
-               "email":{
-                  "type":"string",
-                  "description":"User's email",
-                  "format":"email",
-                  "example":"1@gmail.com"
-               },
-               "password":{
-                  "type":"string",
-                  "description":"User's password",
-                  "example":"qwerty123"
-               }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "QA questions successfully posted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/postTestResponse"
+                }
+              }
             }
-         },
-         "LoginResponse":{
-            "type":"array",
-            "items":{
-               "type":"object",
-               "properties":{
-                  "email":{
-                     "type":"string",
-                     "description":"User's email",
-                     "format":"email",
-                     "example":"1@gmail.com"
-                  },
-                  "name":{
-                     "type":"string",
-                     "description":"User's name",
-                     "format":"name",
-                     "example":"John"
-                  },
-                  "token":{
-                     "type":"string",
-                     "description":"User's token",
-                     "format":"token",
-                     "example":"35098237053479075223"
-                  }
-               }
-            },
-            "example":{
-               "status":"success",
-               "code":200,
-               "data":{
-                  "token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwNmFjOGI4OTEyZWU0YTc4M2YzZWNmOSIsImlhdCI6MTYxNzYxMTAyOSwiZXhwIjoxNjE3NjE4MjI5fQ.B4ZQgV6hrZp8RhR-KnBkV1Rw9jSR7QIXA-OSna-H24I",
-                  "email":"test@gmail.com",
-                  "name":"test"
-               }
-            }
-         },
-         "CurrentUserResponse":{
-            "type":"array",
-            "items":{
-               "type":"object",
-               "properties":{
-                  "email":{
-                     "type":"string",
-                     "description":"User's email",
-                     "format":"email",
-                     "example":"1@gmail.com"
-                  },
-                  "name":{
-                     "type":"string",
-                     "description":"User's name",
-                     "format":"name",
-                     "example":"John"
-                  },
-                  "avatar":{
-                     "type":"string",
-                     "description":"User's avatar",
-                     "format":"avatar"
-                  },
-                  "token":{
-                     "type":"string",
-                     "description":"User's token",
-                     "example":"32143232436545474"
-                  }
-               }
-            },
-            "example":{
-               "status":200,
-               "data":{
-                  "email":"test@gmail.com",
-                  "name":"test",
-                  "avatar":"https://s.gravatar.com/avatar/1aedb8d9dc4751e229a335e371db8058?s=250",
-                  "token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwNmFjOGI4OTEyZWU0YTc4M2YzZWNmOSIsImlhdCI6MTYxNzYxMTE2MywiZXhwIjoxNjE3NjE4MzYzfQ.QUge2wSHuzmPSDMobEdn7jmRv4HzxNaXMynZAdpyqnE"
-               }
-            }
-         },
-         "getTestResponse":{
-            "type":"array",
-            "items":{
-               "type":"object",
-               "properties":{
-                  "question":{
-                     "type":"string",
-                     "description":"question",
-                     "format":"text"
-                  },
-                  "questionId":{
-                     "type":"number",
-                     "description":"question id",
-                     "format":"text"
-                  },
-                  "answers":{
-                     "type":"array",
-                     "description":"array of questions",
-                     "format":"array"
-                  },
-                  "rightAnswer":{
-                     "type":"string",
-                     "description":"right answer",
-                     "format":"string"
-                  }
-               }
-            },
-            "example":[
-               {
-                  "question":"How many testing principles are there?",
-                  "questionId":1,
-                  "answers":[
-                     "5",
-                     "6",
-                     "7",
-                     "8",
-                     "9",
-                     "I don't know"
-                  ],
-                  "rightAnswer":"7"
-               }
-            ]
-         },
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "403": {
+            "description": "User is unauthorized",
+            "content": {}
+          }
+        }
+      },
+      "delete": {
+        "tags": ["technicalQAResult"],
+        "summary": "delete technical QA result",
+        "parameters": [],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
 
-          "postTestRequest":{
-            "type":"object",
-            "properties":{
-               "Request body":{
-                  "type":"string",
-                  "description":"Request body"
-               }
-            },
-            "example":[
-                  "Paste questions here"
-            ]
-         },
-
-         "postTestResponse":{
-            "type":"array",
-            "items":{
-               "type":"object",
-               "properties":{
-                  "result":{
-                     "type":"object",
-                     "description":"object with answers"
-                  },
-                  "_id":{
-                     "type":"string",
-                     "description":"questions id"
-                  },
-                  "userRA":{
-                     "type":"array",
-                     "description":"array of questions"
-                  },
-                  "_id":{
-                     "type":"string",
-                     "description":"question id"
-                  },
-                  "answerId":{
-                     "type":"number",
-                     "description":"question id"
-                  },
-                  "answer":{
-                     "type":"string",
-                     "description":"answer text"
-                  },
-                  "owner":{
-                     "type":"string",
-                     "description":"owner id"
-                  }
-               }
-            },
-            "example":[
-               {
-                  "status":"success",
-                  "code":201,
-                  "data":{
-                     "resultTheory":{
-                        "_id":"606f0c227bf51409ac9c8131",
-                        "userRA":[
-                           {
-                              "_id":"606f0c227bf51409ac9c8132",
-                              "answerId":10,
-                              "answer":"Kanban"
-                           },
-                           {
-                              "_id":"606f0c227bf51409ac9c8133",
-                              "answerId":14,
-                              "answer":"All requirements must be known at the beginning of the project life cycle"
-                           },
-                           {
-                              
-                           }
-                        ],
-                        "owner":"606efa69db7ca41050be1c25"
-                     }
-                  }
-               }
-            ]
-         },
-         "getTestResultResponse":{
-            "type":"array",
-            "items":{
-               "type":"object",
-               "properties":{
-                  "resultTheory":{
-                     "type":"object",
-                     "description":"result object"
-                  },
-                  "_id":{
-                     "type":"string",
-                     "description":"result id"
-                  },
-                  "userRA":{
-                     "type":"array",
-                     "description":"array of results"
-                  },
-                  "id":{
-                     "type":"string",
-                     "description":"result id"
-                  },
-                  "answerId":{
-                     "type":"number",
-                     "description":"answer id"
-                  },
-                  "answer":{
-                     "type":"number",
-                     "description":"answer text"
-                  },
-                  "owner":{
-                     "type":"object",
-                     "description":"owner object"
-                  },
-                  "email":{
-                     "type":"string",
-                     "description":"owner email"
-                  }
-               }
-            },
-            "example":[
-               {
-                  "status":"success",
-                  "code":200,
-                  "data":{
-                     "resultTheory":{
-                        "_id":"606f0c227bf51409ac9c8131",
-                        "userRA":[
-                           {
-                              "_id":"606f0c227bf51409ac9c8132",
-                              "answerId":10,
-                              "answer":"Kanban"
-                           },
-                           {
-                              "_id":"606f0c227bf51409ac9c8133",
-                              "answerId":14,
-                              "answer":"All requirements must be known at the beginning of the project life cycle"
-                           },
-                           {
-                              
-                           }
-                        ],
-                        "owner":{
-                           "email":"test@gmail.com"
-                        }
-                     }
-                  }
-               }
-            ]
-         },
-         "postTestResultResponse":{
-            "type":"array",
-            "items":{
-               "type":"object",
-               "properties":{
-                  "resultTheory":{
-                     "type":"object",
-                     "description":"result object"
-                  },
-                  "_id":{
-                     "type":"string",
-                     "description":"result id"
-                  },
-                  "userRA":{
-                     "type":"array",
-                     "description":"array of results"
-                  },
-                  "id":{
-                     "type":"string",
-                     "description":"result id"
-                  },
-                  "answerId":{
-                     "type":"number",
-                     "description":"answer id"
-                  },
-                  "answer":{
-                     "type":"number",
-                     "description":"answer text"
-                  },
-                  "owner":{
-                     "type":"object",
-                     "description":"owner object"
-                  },
-                  "email":{
-                     "type":"string",
-                     "description":"owner email"
-                  }
-               }
-            },
-            "example":[
-               {
-                  "status":"success",
-                  "code":200,
-                  "data":{
-                     "resultTheory":{
-                        "_id":"606f0c227bf51409ac9c8131",
-                        "userRA":[
-                           {
-                              "_id":"606f0c227bf51409ac9c8132",
-                              "answerId":10,
-                              "answer":"Kanban"
-                           },
-                           {
-                              "_id":"606f0c227bf51409ac9c8133",
-                              "answerId":14,
-                              "answer":"All requirements must be known at the beginning of the project life cycle"
-                           },
-                           {
-                              
-                           }
-                        ],
-                        "owner":{
-                           "email":"test@gmail.com"
-                        }
-                     }
-                  }
-               }
-            ]
-         },
-         "deleteTestResultResponse":{
-            "type":"array",
-            "items":{
-               "type":"object",
-               "properties":{
-                  "status":{
-                     "type":"string",
-                     "description":"status from server"
-                  },
-                  "code":{
-                     "type":"string",
-                     "description":"code status from server"
-                  },
-                  "message":{
-                     "type":"string",
-                     "description":"message about deletion"
-                  }
-               }
-            },
-            "example":[
-               {
-                  "status":"success",
-                  "code":200,
-                  "message":"Results deleted"
-               }
-            ]
-         },
-         "emailRequest":{
-            "type":"object",
-            "required":[
-               "email"
-            ],
-            "properties":{
-               "email":{
-                  "type":"string",
-                  "description":"User's email",
-                  "format":"email",
-                  "example":"1@gmail.com"
-               }
+        "requestBody": {
+          "description": "delete technical QA result"
+        },
+        "responses": {
+          "200": {
+            "description": "technical QA results successfully deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/deleteTestResultResponse"
+                }
+              }
             }
-         },
-         "emailResponse":{
-            "type":"array",
-            "items":{
-               "type":"object",
-               "properties":{
-                  "message":{
-                     "type":"string",
-                     "description":"message that email was sent"
-                  }
-               }
-            },
-            "example":{
-               "message":"Email successfully sent!"
-            }
-         }
-      },
-      "securitySchemes":{
-         "Bearer":{
-            "type":"http",
-            "scheme":"bearer",
-            "bearerFormat":"JWT"
-         }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "403": {
+            "description": "User is unauthorized",
+            "content": {}
+          }
+        }
       }
-   }
+    },
+
+    "/tests/theory/random": {
+      "get": {
+        "tags": ["testingTheory"],
+        "summary": "get random 12 testing theory questions",
+        "parameters": [],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "requestBody": {
+          "description": "get  tests - theory questions"
+        },
+        "responses": {
+          "200": {
+            "description": "theory testing questions successfully received",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/getTestResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "403": {
+            "description": "User is unauthorized",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/tests/theory": {
+      "post": {
+        "tags": ["testingTheory"],
+
+        "summary": "post user answers im testing theory questions",
+
+        "parameters": [],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+
+        "requestBody": {
+          "description": "Test theory object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/postTestRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "theory testing questions successfully ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/postTestResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "403": {
+            "description": "User is unauthorized",
+            "content": {}
+          }
+        }
+      },
+
+      "delete": {
+        "tags": ["testingTheoryResult"],
+
+        "summary": "delete testing theory result",
+
+        "parameters": [],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "requestBody": {
+          "description": "delete tests theory result"
+        },
+        "responses": {
+          "200": {
+            "description": "theory testing results successfully deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/deleteTestResultResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "403": {
+            "description": "User is unauthorized",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/emails": {
+      "get": {
+        "tags": ["emails"],
+        "summary": "get users emails",
+        "parameters": [],
+        "requestBody": {
+          "description": "Get user emails"
+        },
+        "responses": {
+          "200": {
+            "description": "users emails received",
+            "content": {
+              "application/json": {}
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "403": {
+            "description": "User is unauthorized",
+            "content": {}
+          }
+        }
+      },
+      "post": {
+        "tags": ["emails"],
+        "summary": "post users emails ",
+        "parameters": [],
+        "requestBody": {
+          "description": "Email object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/emailRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "users email sent",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/emailResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "403": {
+            "description": "User is unauthorized",
+            "content": {}
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "RegistrationRequest": {
+        "type": "object",
+        "required": ["email", "password"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email",
+            "example": "1@gmail.com"
+          },
+          "password": {
+            "type": "string",
+            "description": "User's password",
+            "example": "qwerty123"
+          }
+        },
+        "example": {
+          "email": "1@gmail.com",
+          "password": "qwerty123"
+        }
+      },
+      "RegistrationResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "email": {
+              "type": "string",
+              "description": "User's email",
+              "format": "email",
+              "example": "1@gmail.com"
+            },
+            "name": {
+              "type": "string",
+              "description": "User's name",
+              "format": "name",
+              "example": "John"
+            },
+            "avatar": {
+              "type": "string",
+              "description": "User's avatar",
+              "format": "avatar"
+            },
+            "userId": {
+              "type": "number",
+              "description": "User's id",
+              "example": "32143232436545474"
+            }
+          }
+        },
+        "example": {
+          "status": "success",
+          "code": 201,
+          "data": {
+            "email": "test@gmail.com",
+            "name": "test",
+            "avatar": "https://s.gravatar.com/avatar/1aedb8d9dc4751e229a335e371db8058?s=250"
+          }
+        }
+      },
+      "LoginRequest": {
+        "type": "object",
+        "required": ["email", "password"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email",
+            "example": "1@gmail.com"
+          },
+          "password": {
+            "type": "string",
+            "description": "User's password",
+            "example": "qwerty123"
+          }
+        }
+      },
+      "LoginResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "email": {
+              "type": "string",
+              "description": "User's email",
+              "format": "email",
+              "example": "1@gmail.com"
+            },
+            "name": {
+              "type": "string",
+              "description": "User's name",
+              "format": "name",
+              "example": "John"
+            },
+            "token": {
+              "type": "string",
+              "description": "User's token",
+              "format": "token",
+              "example": "35098237053479075223"
+            }
+          }
+        },
+        "example": {
+          "status": "success",
+          "code": 200,
+          "data": {
+            "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwNmFjOGI4OTEyZWU0YTc4M2YzZWNmOSIsImlhdCI6MTYxNzYxMTAyOSwiZXhwIjoxNjE3NjE4MjI5fQ.B4ZQgV6hrZp8RhR-KnBkV1Rw9jSR7QIXA-OSna-H24I",
+            "email": "test@gmail.com",
+            "name": "test"
+          }
+        }
+      },
+      "CurrentUserResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "email": {
+              "type": "string",
+              "description": "User's email",
+              "format": "email",
+              "example": "1@gmail.com"
+            },
+            "name": {
+              "type": "string",
+              "description": "User's name",
+              "format": "name",
+              "example": "John"
+            },
+            "avatar": {
+              "type": "string",
+              "description": "User's avatar",
+              "format": "avatar"
+            },
+            "token": {
+              "type": "string",
+              "description": "User's token",
+              "example": "32143232436545474"
+            }
+          }
+        },
+        "example": {
+          "status": 200,
+          "data": {
+            "email": "test@gmail.com",
+            "name": "test",
+            "avatar": "https://s.gravatar.com/avatar/1aedb8d9dc4751e229a335e371db8058?s=250",
+            "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwNmFjOGI4OTEyZWU0YTc4M2YzZWNmOSIsImlhdCI6MTYxNzYxMTE2MywiZXhwIjoxNjE3NjE4MzYzfQ.QUge2wSHuzmPSDMobEdn7jmRv4HzxNaXMynZAdpyqnE"
+          }
+        }
+      },
+      "getTestResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "question": {
+              "type": "string",
+              "description": "question",
+              "format": "text"
+            },
+            "questionId": {
+              "type": "number",
+              "description": "question id",
+              "format": "text"
+            },
+            "answers": {
+              "type": "array",
+              "description": "array of questions",
+              "format": "array"
+            },
+            "rightAnswer": {
+              "type": "string",
+              "description": "right answer",
+              "format": "string"
+            }
+          }
+        },
+        "example": [
+          {
+            "question": "How many testing principles are there?",
+            "questionId": 1,
+            "answers": ["5", "6", "7", "8", "9", "I don't know"],
+            "rightAnswer": "7"
+          }
+        ]
+      },
+
+      "postTestRequest": {
+        "type": "object",
+        "properties": {
+          "Request body": {
+            "type": "string",
+            "description": "Request body"
+          }
+        },
+        "example": [
+          {
+            "question": "What are the main benefits of automated testing?",
+            "questionId": 3,
+            "userAnswer": "All options are correct"
+          },
+          {
+            "question": "What are the main types of locators in Selenium?",
+            "questionId": 4,
+            "userAnswer": "Name, TagName"
+          },
+          {
+            "question": "Most often, viewing elements in the Google Chrome browseron windows is launched by the button",
+            "questionId": 6,
+            "userAnswer": "F12"
+          },
+          {
+            "question": "Most often, viewing items in the Google Chrome browser onMac is launched by this key combination",
+            "questionId": 7,
+            "userAnswer": "Cmd+Opt+J"
+          },
+          {
+            "question": "navigate().forward(). This navigation command in Selenium:",
+            "questionId": 9,
+            "userAnswer": "There is no such command"
+          },
+          {
+            "question": "Which of the following is a bug report attribute",
+            "questionId": 12,
+            "userAnswer": "All options are correct"
+          },
+          {
+            "question": "Testing outside of normal performance is",
+            "questionId": 15,
+            "userAnswer": "Stress testing"
+          },
+          {
+            "question": "Checking the onBlur field is done",
+            "questionId": 17,
+            "userAnswer": "When we press the submit button"
+          },
+          {
+            "question": "What's wrong appealing to Smoke and sanity tests?",
+            "questionId": 18,
+            "userAnswer": "All options are incorrent"
+          },
+          {
+            "question": "White box testing does not concern",
+            "questionId": 21,
+            "userAnswer": "Causes and effects of coverage"
+          },
+          {
+            "question": "What is the order of priority testing?",
+            "questionId": 23,
+            "userAnswer": "Module >> System >> Acceptance test"
+          },
+          {
+            "question": "Which of the following is not an iterative model?",
+            "questionId": 27,
+            "userAnswer": "V model"
+          }
+        ]
+      },
+
+      "postTestResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "result": {
+              "type": "object",
+              "description": "object with answers"
+            },
+            "_id": {
+              "type": "string",
+              "description": "questions id"
+            },
+            "userRA": {
+              "type": "array",
+              "description": "array of questions"
+            },
+            "_id": {
+              "type": "string",
+              "description": "question id"
+            },
+            "answerId": {
+              "type": "number",
+              "description": "question id"
+            },
+            "answer": {
+              "type": "string",
+              "description": "answer text"
+            },
+            "owner": {
+              "type": "string",
+              "description": "owner id"
+            }
+          }
+        },
+        "example": [
+          {
+            "status": "success",
+            "code": 201,
+            "data": {
+              "resultTheory": {
+                "_id": "606f0c227bf51409ac9c8131",
+                "userRA": [
+                  {
+                    "_id": "606f0c227bf51409ac9c8132",
+                    "answerId": 10,
+                    "answer": "Kanban"
+                  },
+                  {
+                    "_id": "606f0c227bf51409ac9c8133",
+                    "answerId": 14,
+                    "answer": "All requirements must be known at the beginning of the project life cycle"
+                  },
+                  {}
+                ],
+                "owner": "606efa69db7ca41050be1c25"
+              }
+            }
+          }
+        ]
+      },
+
+      "deleteTestResultResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "description": "status from server"
+            },
+            "code": {
+              "type": "string",
+              "description": "code status from server"
+            },
+            "message": {
+              "type": "string",
+              "description": "message about deletion"
+            }
+          }
+        },
+        "example": [
+          {
+            "status": "success",
+            "code": 200,
+            "message": "Results deleted"
+          }
+        ]
+      },
+      "emailRequest": {
+        "type": "object",
+        "required": [
+          "type",
+          "score",
+          "total",
+          "questions",
+          "question",
+          "answer",
+          "rightAnswer",
+          "name",
+          "correctAnser"
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "type of tests",
+            "example": "theory"
+          },
+          "score": {
+            "type": "number",
+            "description": "score",
+            "example": "90"
+          },
+          "total": {
+            "type": "number",
+            "description": "total score",
+            "example": "10"
+          },
+          "questions": {
+            "type": "array",
+            "description": "array of questions",
+            "example": "questions"
+          },
+          "question": {
+            "type": "string",
+            "description": "question text",
+            "example": "What is JS"
+          },
+          "answer": {
+            "type": "string",
+            "description": "answer text",
+            "example": "Programming language"
+          },
+          "rightAnswer": {
+            "type": "string",
+            "description": "right answer text",
+            "example": "Programming language"
+          },
+          "name": {
+            "type": "string",
+            "description": "user name",
+            "example": "John"
+          },
+          "correctAnswers": {
+            "type": "number",
+            "description": "correct answer",
+            "example": "9"
+          }
+        },
+        "example": {
+          "type": "theory",
+          "score": 90,
+          "total": 10,
+          "questions": [
+            {
+              "question": "What is JS What is JS What is JS What is JS What is JS What is JS What is JS",
+              "answer": "What is JS What is JS What is JS What is JS",
+              "rightAnswer": "Programming languageProgramming language Programming language Programming language"
+            },
+            {
+              "question": "What is JS What is JS What is JS What is JS What is JS What is JS What is JS",
+              "answer": "What is JS What is JS What is JS What is JS",
+              "rightAnswer": "Programming languageProgramming language Programming language Programming language"
+            },
+            {
+              "question": "What is JS What is JS What is JS What is JS What is JS What is JS What is JS",
+              "answer": "What is JS What is JS What is JS What is JS",
+              "rightAnswer": "Programming languageProgramming language Programming language Programming language"
+            }
+          ],
+          "name": "John",
+          "correctAnswers": 9
+        }
+      },
+      "emailResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string",
+              "description": "message that email was sent"
+            }
+          }
+        },
+        "example": {
+          "message": "Email successfully sent!"
+        }
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
 }
