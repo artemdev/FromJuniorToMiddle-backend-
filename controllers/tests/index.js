@@ -1,11 +1,11 @@
-const path = require("path");
-const { parseTests } = require("../../helpers/parseQuestions");
-const { httpCode } = require("../../helpers/constants");
-const Tests = require("../../model/tests");
-const EmailService = require("../../services/email");
+const path = require('path');
+const { parseTests } = require('../../helpers/parseQuestions');
+const { httpCode } = require('../../helpers/constants');
+const Tests = require('../../model/tests');
+const EmailService = require('../../services/email');
 
-const technicalQuestionsDb = path.join(__dirname, "../../db/technicalQA.json");
-const theoryQuestionsDb = path.join(__dirname, "../../db/testingTheory.json");
+const technicalQuestionsDb = path.join(__dirname, '../../db/technicalQA.json');
+const theoryQuestionsDb = path.join(__dirname, '../../db/testingTheory.json');
 
 const createTechResult = async (req, res, next) => {
   try {
@@ -26,19 +26,19 @@ const createTechResult = async (req, res, next) => {
         questionId,
         question,
         rightAnswer,
-      })
+      }),
     );
 
-    userAnswers.forEach((answer) => {
+    userAnswers.forEach(answer => {
       if (
         dataToCheck.find(
-          (data) =>
+          data =>
             answer.questionId === data.questionId &&
-            answer.userAnswer === data.rightAnswer
+            answer.userAnswer === data.rightAnswer,
         )
       ) {
         dataToCheck.find(
-          (data) => {
+          data => {
             questions.push({
               questionId: answer.questionId,
               question: answer.question,
@@ -46,7 +46,7 @@ const createTechResult = async (req, res, next) => {
               rightAnswer: data.rightAnswer,
               isCorrect: true,
             });
-          }
+          },
           // answer.questionId === data.questionId &&
           // answer.userAnswer === data.rightAnswer
         );
@@ -68,10 +68,10 @@ const createTechResult = async (req, res, next) => {
       }
     });
 
-    const correctAnswers = questions.filter((el) => el.rightAnswer === true);
+    const correctAnswers = questions.filter(el => el.rightAnswer === true);
 
     const technicalQA = await Tests.create({
-      type: "technical",
+      type: 'technical',
       questions,
       total: questions.length,
       correctAnswers: correctAnswers.length,
@@ -82,7 +82,7 @@ const createTechResult = async (req, res, next) => {
 
     if (technicalQA) {
       const questions = [
-        ...technicalQA.questions.map((question) => ({
+        ...technicalQA.questions.map(question => ({
           answer: question.answer,
           rightAnswer: String(question.rightAnswer),
           question: question.question,
@@ -97,23 +97,20 @@ const createTechResult = async (req, res, next) => {
         rightAnswer: technicalQA.rightAnswer,
       };
 
-<<<<<<< HEAD
-=======
       console.log(body);
->>>>>>> dfe648ce1054870a7c4a7f65f6088384b13e766d
       // const emailService = new EmailService(process.env.NODE_ENV);
       // await emailService.sendEmail(email, body, technicalQA.type);
 
       return res.status(httpCode.CREATED).json({
-        status: "success",
+        status: 'success',
         code: httpCode.CREATED,
         data: body,
       });
     } else {
       return res.status(httpCode.BAD_REQUEST).json({
-        status: "error",
+        status: 'error',
         code: httpCode.BAD_REQUEST,
-        message: "Not Found",
+        message: 'Not Found',
       });
     }
   } catch (e) {
@@ -128,7 +125,7 @@ const getTechResult = async (req, res, next) => {
 
     if (resultQA) {
       return res.status(httpCode.OK).json({
-        status: "success",
+        status: 'success',
         code: httpCode.OK,
         data: {
           resultQA,
@@ -136,9 +133,9 @@ const getTechResult = async (req, res, next) => {
       });
     } else {
       return res.status(httpCode.NOT_FOUND).json({
-        status: "error",
+        status: 'error',
         code: httpCode.NOT_FOUND,
-        message: "Not Found",
+        message: 'Not Found',
       });
     }
   } catch (e) {
@@ -153,15 +150,15 @@ const removeResult = async (req, res, next) => {
 
     if (technicalQA) {
       return res.status(httpCode.OK).json({
-        status: "success",
+        status: 'success',
         code: httpCode.OK,
-        message: "Results deleted",
+        message: 'Results deleted',
       });
     } else {
       return res.status(httpCode.NOT_FOUND).json({
-        status: "error",
+        status: 'error',
         code: httpCode.NOT_FOUND,
-        message: "Not Found",
+        message: 'Not Found',
       });
     }
   } catch (e) {
@@ -180,15 +177,15 @@ const createTheoryResult = async (req, res, next) => {
         questionId,
         question,
         rightAnswer,
-      })
+      }),
     );
 
-    userAnswers.forEach((answer) => {
+    userAnswers.forEach(answer => {
       if (
         dataToCheck.find(
-          (data) =>
+          data =>
             answer.questionId === data.questionId &&
-            answer.userAnswer === data.rightAnswer
+            answer.userAnswer === data.rightAnswer,
         )
       ) {
         questions.push({
@@ -207,14 +204,14 @@ const createTheoryResult = async (req, res, next) => {
       }
     });
 
-    const correctAnswers = questions.filter((el) => el.rightAnswer === true);
-    const newQuestions = questions.map((question) => ({
+    const correctAnswers = questions.filter(el => el.rightAnswer === true);
+    const newQuestions = questions.map(question => ({
       answer: question.answer,
       rightAnswer: question.rightAnswer,
       question: question.question,
     }));
     const technicalQA = await Tests.create({
-      type: "theory",
+      type: 'theory',
       questions: newQuestions,
       total: questions.length,
       correctAnswers: correctAnswers.length,
@@ -233,7 +230,7 @@ const createTheoryResult = async (req, res, next) => {
     // await emailService.sendEmail(email, body, technicalQA.type);
 
     return res.status(httpCode.CREATED).json({
-      status: "success",
+      status: 'success',
       code: httpCode.CREATED,
       data: {
         type: technicalQA.type,
@@ -257,7 +254,7 @@ const getTheoryResult = async (req, res, next) => {
 
     if (resultTheory) {
       return res.status(httpCode.OK).json({
-        status: "success",
+        status: 'success',
         code: httpCode.OK,
         data: {
           resultTheory,
@@ -265,9 +262,9 @@ const getTheoryResult = async (req, res, next) => {
       });
     } else {
       return res.status(httpCode.NOT_FOUND).json({
-        status: "error",
+        status: 'error',
         code: httpCode.NOT_FOUND,
-        message: "Not Found",
+        message: 'Not Found',
       });
     }
   } catch (e) {
