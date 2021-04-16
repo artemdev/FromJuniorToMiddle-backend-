@@ -1,6 +1,8 @@
 const sgMail = require('@sendgrid/mail');
 const Mailgen = require('mailgen');
 const config = require('../config/email.json');
+const FROM_EMAIL = 'valentynachudik@gmail.com';
+// const FROM_EMAIL = 'artwayprojects@gmail.com';
 require('dotenv').config();
 class EmailService {
   #sender = sgMail;
@@ -23,7 +25,7 @@ class EmailService {
     }
   }
 
-  #createTemplate(body, subject) {
+  #createReport(body, subject) {
     const mailGenerator = new this.#GenerateTemplate({
       theme: 'salted',
       product: {
@@ -55,56 +57,69 @@ class EmailService {
     return mailGenerator.generate(template);
   }
 
-  //  const body = {
-  //     // total
-  //    correctAnswers
-  //     questions:[
-  //   {
-  //     question:
-  //       'What is JS What is JS What is JS What is JS What is JS What is JS What is JS',
-  //     answer: 'What is JS What is JS What is JS What is JS ',
-  //     rightAnswer:
-  //       'Programming languageProgramming language Programming language Programming language',
-  //   },
-  //   {
-  //     question:
-  //       'What is JS What is JS What is JS What is JS What is JS What is JS What is JS',
-  //     answer: 'What is JS What is JS What is JS What is JS ',
-  //     rightAnswer:
-  //       'Programming languageProgramming language Programming language Programming language',
-  //   },
-  //   {
-  //     question:
-  //       'What is JS What is JS What is JS What is JS What is JS What is JS What is JS',
-  //     answer: 'What is JS What is JS What is JS What is JS ',
-  //     rightAnswer:
-  //       'Programming languageProgramming language Programming language Programming language',
-  //   },
-  // ];
-  //     name,
-  //   };
-  // const type = 'theory';
-  // const email = 'artem.zimovets@gmail.com';
+  #createJobOffer(name, score, subject) {
+    const mailGenerator = new this.#GenerateTemplate({
+      theme: 'salted',
+      product: {
+        name: subject,
+        link: this.link,
+      },
+    });
+
+    const template = {
+      body: {
+        name: name,
+        intro: 'Congratulations! You have passed the "Junior to Middle" test!',
+        table: {
+          title:
+            'Your Middle FrontEnd Developer offer with the salary of 1500$ is ready',
+          data: [
+            {
+              Intruction: 'Please reply to this email to continue',
+            },
+          ],
+        },
+      },
+
+      outro: 'See you soon, Mate!',
+    };
+    return mailGenerator.generate(template);
+  }
 
   async sendEmail(email, body, type = 'theory') {
-    console.log(body);
-    console.log(email);
-    console.log(type);
-    // TODO count score
+    this.#sender.setApiKey(process.env.SENDGRID_API_KEY);
+    //  SEND REPORT
     const score = Math.round((100 / body.total) * body.correctAnswers);
     const subject = `Your ${type} test score is ${score} %!`;
-    console.log('subject is', subject);
-    const emailBody = this.#createTemplate(body, subject);
-    this.#sender.setApiKey(process.env.SENDGRID_API_KEY);
-    const msg = {
+    const jobOfferSubject = 'Middle Developer Job Offer';
+    const reportBody = this.#createReport(body, subject);
+    const jobOfferBody = this.#createJobOffer(
+      body.name,
+      score,
+      jobOfferSubject,
+    );
+    // SEND REPORT
+    const report = {
       to: email,
       // from: 'artwayprojects@gmail.com',
-      from: 'valentynachudik@gmail.com',
+      from: FROM_EMAIL,
       subject: subject,
-      html: emailBody,
+      html: reportBody,
     };
-    await this.#sender.send(msg);
-    require('fs').writeFileSync('./public/email.html', emailBody, 'utf8');
+    await this.#sender.send(report);
+
+    // SEND JOB OFFER
+    const jobOffer = {
+      to: email,
+      // from: 'artwayprojects@gmail.com',
+      from: FROM_EMAIL,
+      subject: jobOfferSubject,
+      html: jobOfferBody,
+    };
+    await this.#sender.send(jobOffer);
+
+    require('fs').writeFileSync('./public/email.html', reportBody, 'utf8');
+    require('fs').writeFileSync('./public/offer.html', jobOfferBody, 'utf8');
   }
 }
 
