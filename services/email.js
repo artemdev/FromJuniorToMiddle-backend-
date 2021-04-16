@@ -1,8 +1,10 @@
 const sgMail = require('@sendgrid/mail');
 const Mailgen = require('mailgen');
 const config = require('../config/email.json');
-const FROM_EMAIL = 'valentynachudik@gmail.com';
+// const FROM_EMAIL = 'valentynachudik@gmail.com';
 // const FROM_EMAIL = 'artwayprojects@gmail.com';
+const FROM_EMAIL = 'malyshkoserhii@meta.ua';
+
 require('dotenv').config();
 class EmailService {
   #sender = sgMail;
