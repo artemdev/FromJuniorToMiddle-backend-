@@ -1,13 +1,13 @@
 const User = require('./schemas/user.js');
 
-const findByEmail = async (email) => {
+const findByEmail = async email => {
   return await User.findOne({ email: email });
 };
-const findByToken = async (token) => {
+const findByToken = async token => {
   return await User.findOne({ token });
 };
 
-const findById = async (id) => {
+const findById = async id => {
   return await User.findOne({ _id: id });
 };
 
@@ -20,7 +20,7 @@ const create = async ({ email, password }) => {
   });
 };
 
-const createFromGoogle = async (data) => {
+const createFromGoogle = async data => {
   return await User.create({
     name: data.given_name,
     email: data.email,
