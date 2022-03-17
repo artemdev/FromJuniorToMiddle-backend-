@@ -1,6 +1,6 @@
 [API DOCUMENTATION IN SWAGGER](https://fromjuniortomiddle.herokuapp.com/api-docs/)
 
-One of my hackaton projects that helps junior developer update development skills by answering technical question
+One of my hackathon projects that helps junior developer update development skills by answering technical question
 
 Technologies that were used in Backend Part
 
